@@ -19,9 +19,8 @@ Future<String?> initializeNotifications() async {
   if (getPlatform(ignoreEmulation: true) != PlatformOS.isIOS) {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('notification_icon_android2');
-    final DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(
-            onDidReceiveLocalNotification: (_, __, ___, ____) {});
+    const DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings();
 
     final InitializationSettings initializationSettings =
         InitializationSettings(

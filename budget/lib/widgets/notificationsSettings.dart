@@ -359,10 +359,7 @@ Future<bool> scheduleDailyNotification(
       chosenMessage,
       dateTime,
       notificationDetails,
-      androidAllowWhileIdle: true,
       payload: 'addTransaction',
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
 
       // If exact time was used, need USE_EXACT_ALARM and SCHEDULE_EXACT_ALARM permissions
@@ -445,10 +442,7 @@ Future<bool> scheduleUpcomingTransactionsNotification(context) async {
         chosenMessage,
         dateTime,
         notificationDetails,
-        androidAllowWhileIdle: true,
         payload: 'upcomingTransaction',
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
 
         // If exact time was used, need USE_EXACT_ALARM and SCHEDULE_EXACT_ALARM permissions
         // which are only meant for calendar/reminder based applications
@@ -476,7 +470,7 @@ Future<bool> cancelUpcomingTransactionsNotification() async {
     endDate: DateTime.now().justDay(dayOffset: 30),
   );
   int idStart = 100;
-  for (Transaction upcomingTransaction in upcomingTransactions) {
+  for (int i = 0; i < upcomingTransactions.length; i++) {
     idStart++;
     await flutterLocalNotificationsPlugin.cancel(idStart);
   }
