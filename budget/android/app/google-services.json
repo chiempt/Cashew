@@ -1,57 +1,42 @@
 {
   "project_info": {
-    "project_number": "267621253497",
-    "project_id": "budget-app-flutter",
-    "storage_bucket": "budget-app-flutter.appspot.com"
+    "project_number": "774896032628",
+    "project_id": "pipefinxai",
+    "storage_bucket": "pipefinxai.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:267621253497:android:e7a2967eaf8dd072842fa8",
+        "mobilesdk_app_id": "1:774896032628:android:c5fed8c475dcdc691bea21",
         "android_client_info": {
-          "package_name": "com.budget.tracker_app"
+          "package_name": "com.money.manager.budget.tracker"
         }
       },
       "oauth_client": [
         {
-          "client_id": "267621253497-8bql8glub2qobkqe55lioha1c4lggrug.apps.googleusercontent.com",
+          "client_id": "774896032628-19fhpda2ur8h4rklhk6h8h4rnef7un15.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.budget.tracker_app",
-            "certificate_hash": "6139edafe5c4cdb6dccd5f01222b9db88a1620f9"
+            "package_name": "com.money.manager.budget.tracker",
+            "certificate_hash": "de29ad49f303f93726c2c62768a1f3f2054f9401"
           }
         },
         {
-          "client_id": "267621253497-qr0vit1n0l5f2k5h0qnumkrgm6td1fsu.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.budget.tracker_app",
-            "certificate_hash": "1066b81467dc8c595807e67062163d24efe8c3b5"
-          }
-        },
-        {
-          "client_id": "267621253497-1na8q1lt56qg9177dskkrkdds5jjiqrn.apps.googleusercontent.com",
+          "client_id": "774896032628-knl0d6gds63do837u4ptsceg72dup7jq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDNVDtwGJUHBZohwB2RDeUco-5hAGfx2bA"
+          "current_key": "AIzaSyBxUxOoU8XaonPeAgoxBRvwBTQLNwJ8JXs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "267621253497-1na8q1lt56qg9177dskkrkdds5jjiqrn.apps.googleusercontent.com",
+              "client_id": "774896032628-knl0d6gds63do837u4ptsceg72dup7jq.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "267621253497-ih94g1srq37gun4mdmvadgl3ev588vpf.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.budget.tracker-app"
-              }
             }
           ]
         }

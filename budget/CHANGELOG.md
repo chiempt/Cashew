@@ -39,3 +39,30 @@
 ### Package Warnings
 - **Package warnings handling**: The warnings about `file_picker` missing inline implementations for desktop platforms (Linux, macOS, Windows) are from the git fork being used (`melWiss/flutter_file_picker`). These warnings don't affect mobile/web functionality and are expected until the fork maintainer adds inline implementations. No action needed as app primarily targets mobile platforms.
 
+
+
+  PipeArtXAI keytool -list -v \
+-alias androiddebugkey \
+-keystore ~/.android/debug.keystore \
+-storepass android \
+-keypass android
+
+Alias name: androiddebugkey
+Creation date: Nov 1, 2023
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: C=US, O=Android, CN=Android Debug
+Issuer: C=US, O=Android, CN=Android Debug
+Serial number: 1
+Valid from: Wed Nov 01 23:27:16 ICT 2023 until: Fri Oct 24 23:27:16 ICT 2053
+Certificate fingerprints:
+	 SHA1: DE:29:AD:49:F3:03:F9:37:26:C2:C6:27:68:A1:F3:F2:05:4F:94:01
+	 SHA256: BB:4E:A9:EC:54:2F:1C:BB:F8:27:A7:49:44:13:EE:00:80:13:83:1E:78:79:EF:81:8B:DB:A5:76:91:21:F5:52
+Signature algorithm name: SHA1withRSA (weak)
+Subject Public Key Algorithm: 2048-bit RSA key
+Version: 1
+
+Warning:
+The certificate uses the SHA1withRSA signature algorithm which is considered a security risk.
+➜  PipeArtXAI 
