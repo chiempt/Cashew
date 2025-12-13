@@ -243,6 +243,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
         scrollController: _scrollController,
         child: Stack(
           children: [
+            HomePageBackground(),
             AndroidOnly(child: CheckWidgetLaunch()),
             AndroidOnly(child: RenderHomePageWidgets()),
             Scaffold(
@@ -548,4 +549,72 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
             ),
     );
   }
+}
+
+class HomePageBackground extends StatelessWidget {
+  const HomePageBackground({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: AlignmentDirectional.topStart,
+            end: AlignmentDirectional.bottomEnd,
+            colors: [
+              Theme.of(context).colorScheme.background,
+              dynamicPastel(
+                context,
+                Theme.of(context).brightness == Brightness.light
+                    ? Theme.of(context).colorScheme.primaryContainer
+                    : Theme.of(context).colorScheme.secondaryContainer,
+                amountLight: 0.15,
+                amountDark: 0.08,
+              ),
+              Theme.of(context).colorScheme.background,
+            ],
+            stops: [0.0, 0.5, 1.0],
+          ),
+        ),
+        child: Theme.of(context).brightness == Brightness.light
+            ? CustomPaint(
+                painter: _SubtlePatternPainter(
+                  color:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.03),
+                ),
+              )
+            : null,
+      ),
+    );
+  }
+}
+
+class _SubtlePatternPainter extends CustomPainter {
+  final Color color;
+
+  _SubtlePatternPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    final spacing = 120.0;
+    final radius = 2.0;
+
+    for (double x = 0; x < size.width + spacing; x += spacing) {
+      for (double y = 0; y < size.height + spacing; y += spacing) {
+        canvas.drawCircle(
+          Offset(x, y),
+          radius,
+          paint,
+        );
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
