@@ -1,0 +1,10 @@
+// Fix for Xcode 26: Remove unsupported -G flag
+// This file overrides compiler flags to fix compatibility with Xcode 26
+
+GCC_GENERATE_DEBUGGING_SYMBOLS = NO
+DEBUG_INFORMATION_FORMAT = dwarf
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+
+// Override compiler flags - ensure -G is not included
+// Note: These will be merged with inherited flags, and -G will be filtered out by Podfile post_install
+
