@@ -95,19 +95,6 @@ Future<bool> signInGoogle(
       googleSignIn = null;
       settingsPageStateKey.currentState?.refreshState();
     }
-    //Check connection
-    // isConnected = await checkConnection().timeout(Duration(milliseconds: 2500),
-    //     onTimeout: () {
-    //   throw ("There was an error checking your connection");
-    // });
-    // if (isConnected == false) {
-    //   if (context != null) {
-    //     openSnackbar(context, "Could not connect to network",
-    //         backgroundColor: lightenPastel(Theme.of(context).colorScheme.error,
-    //             amount: 0.6));
-    //   }
-    //   return false;
-    // }
 
     if (waitForCompletion == true && context != null) openLoadingPopup(context);
     if (googleUser == null) {
@@ -593,15 +580,6 @@ Future<void> loadBackup(
           description: kIsWeb
               ? "refresh-required-to-load-backup".tr()
               : "restart-required-to-load-backup".tr(),
-          // codeBlock: file.name.toString() +
-          //     (file.modifiedTime == null
-          //         ? ""
-          //         : ("\n" +
-          //             getWordedDateShort(
-          //               file.modifiedTime!,
-          //               showTodayTomorrow: false,
-          //               includeYear: true,
-          //             ))),
         );
       },
       onError: (error) {

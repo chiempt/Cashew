@@ -184,33 +184,6 @@ class PageNavigationFrameworkSafeArea extends StatelessWidget {
                 ),
               )
             : SizedBox.shrink(),
-        // Gradient fade to right overflow, disabled for now
-        // because many pages have full screen elements/banners etc
-        // hasRightSafeArea
-        //     ? Padding(
-        //         padding: EdgeInsets.only(
-        //             right: rightPaddingSafeArea),
-        //         child: Align(
-        //           alignment: Alignment.centerRight,
-        //           child: Container(
-        //             width: 12,
-        //             foregroundDecoration: BoxDecoration(
-        //               gradient: LinearGradient(
-        //                 colors: [
-        //                   Theme.of(context)
-        //                       .colorScheme.background
-        //                       .withOpacity(0.0),
-        //                   Theme.of(context).colorScheme.background,
-        //                 ],
-        //                 begin: Alignment.centerLeft,
-        //                 end: Alignment.centerRight,
-        //                 stops: [0.1, 1],
-        //               ),
-        //             ),
-        //           ),
-        //         ),
-        //       )
-        //     : SizedBox.shrink(),
       ],
     );
   }
@@ -469,21 +442,9 @@ class PageNavigationFrameworkState extends State<PageNavigationFramework> {
       });
 
       if (kIsWeb) {
-        // On web, disable the browser's context menu since this example uses a custom
-        // Flutter-rendered context menu.
-        // Refer here: https://api.flutter.dev/flutter/material/TextField/contextMenuBuilder.html
         BrowserContextMenu.disableContextMenu();
       }
     });
-
-    // SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
-    //   FeatureDiscovery.discoverFeatures(
-    //     context,
-    //     const <String>{
-    //       'add_transaction_button',
-    //     },
-    //   );
-    // });
   }
 
   @override

@@ -8,7 +8,6 @@ import 'package:budget/pages/transactionsListPage.dart';
 import 'package:budget/pages/upcomingOverdueTransactionsPage.dart';
 import 'package:budget/struct/navBarIconsData.dart';
 import 'package:budget/struct/settings.dart';
-import 'package:budget/widgets/fadeIn.dart';
 import 'package:budget/widgets/framework/popupFramework.dart';
 import 'package:budget/widgets/navigationFramework.dart';
 import 'package:budget/widgets/openBottomSheet.dart';
@@ -114,200 +113,230 @@ class BottomNavBarState extends State<BottomNavBar> {
     if (getIsFullScreen(context)) return SizedBox.shrink();
     if (getPlatform() == PlatformOS.isIOS) {
       return IntrinsicHeight(
-        child: Container(
-          decoration: BoxDecoration(
-            color: getBottomNavbarBackgroundColor(
-              colorScheme: Theme.of(context).colorScheme,
-              brightness: Theme.of(context).brightness,
-              lightDarkAccent: getColor(context, "lightDarkAccent"),
-            ),
-            boxShadow: boxShadowSharp(context),
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-          padding: EdgeInsetsDirectional.only(
-              top: 2,
-              bottom: max(2, MediaQuery.paddingOf(context).bottom - 5.5)),
-          child: Row(
-            children: [
-              NavBarSpaceButton(
-                onPress: () => onItemTapped(0),
-                flex: 9,
-                child: Container(),
+          child: Container(
+            decoration: BoxDecoration(
+              color: getBottomNavbarBackgroundColor(
+                colorScheme: Theme.of(context).colorScheme,
+                brightness: Theme.of(context).brightness,
+                lightDarkAccent: getColor(context, "lightDarkAccent"),
               ),
-              NavBarSpaceButton(
-                onPress: () => onItemTapped(0),
-                flex: 20,
-                child: CustomizableNavigationBarIcon(
-                  shortcutAppSettingKey: "customNavBarShortcut0",
-                  afterSet: () {
-                    onItemTapped(0, allowReApply: true);
-                  },
-                  navigationBarIconBuilder: (NavBarIconData iconData) {
-                    return NavBarIcon(
-                      icon: iconData.iconData,
-                      customIconScale: iconData.iconScale,
-                      onItemTapped: onItemTapped,
-                      navigationBarIndex: 0,
-                      currentNavigationBarIndex: navigationBarIndex,
-                    );
-                  },
+              boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.black.withOpacity(0.3)
+                      : Colors.black.withOpacity(0.08),
+                  blurRadius: 20,
+                  offset: Offset(0, -4),
+                  spreadRadius: 0,
                 ),
-              ),
-              NavBarSpaceButton(
-                onPress: () => onItemTapped(1),
-                flex: 20,
-                child: CustomizableNavigationBarIcon(
-                  shortcutAppSettingKey: "customNavBarShortcut1",
-                  afterSet: () {
-                    onItemTapped(1, allowReApply: true);
-                  },
-                  navigationBarIconBuilder: (NavBarIconData iconData) {
-                    return NavBarIcon(
-                      icon: iconData.iconData,
-                      customIconScale: iconData.iconScale,
-                      onItemTapped: onItemTapped,
-                      navigationBarIndex: 1,
-                      currentNavigationBarIndex: navigationBarIndex,
-                    );
-                  },
+              ],
+            ),
+            padding: EdgeInsetsDirectional.only(
+                top: 8,
+                bottom: max(8, MediaQuery.paddingOf(context).bottom - 2)),
+            child: Row(
+              children: [
+                NavBarSpaceButton(
+                  onPress: () => onItemTapped(0),
+                  flex: 9,
+                  child: Container(),
                 ),
-              ),
-              NavBarSpaceButton(
-                onPress: () => onItemTapped(2),
-                flex: 20,
-                child: CustomizableNavigationBarIcon(
-                  shortcutAppSettingKey: "customNavBarShortcut2",
-                  afterSet: () {
-                    onItemTapped(2, allowReApply: true);
-                  },
-                  navigationBarIconBuilder: (NavBarIconData iconData) {
-                    return NavBarIcon(
-                      icon: iconData.iconData,
-                      customIconScale: iconData.iconScale,
-                      onItemTapped: onItemTapped,
-                      navigationBarIndex: 2,
-                      currentNavigationBarIndex: navigationBarIndex,
-                    );
-                  },
+                NavBarSpaceButton(
+                  onPress: () => onItemTapped(0),
+                  flex: 20,
+                  child: CustomizableNavigationBarIcon(
+                    shortcutAppSettingKey: "customNavBarShortcut0",
+                    afterSet: () {
+                      onItemTapped(0, allowReApply: true);
+                    },
+                    navigationBarIconBuilder: (NavBarIconData iconData) {
+                      return NavBarIcon(
+                        icon: iconData.iconData,
+                        customIconScale: iconData.iconScale,
+                        onItemTapped: onItemTapped,
+                        navigationBarIndex: 0,
+                        currentNavigationBarIndex: navigationBarIndex,
+                      );
+                    },
+                  ),
                 ),
-              ),
-              NavBarSpaceButton(
-                onPress: () => onItemTapped(3),
-                flex: 20,
-                child: NavBarIcon(
-                  onItemTapped: onItemTapped,
-                  icon: navBarIconsData["more"]!.iconData,
-                  navigationBarIndex: 3,
-                  currentNavigationBarIndex: navigationBarIndex,
+                NavBarSpaceButton(
+                  onPress: () => onItemTapped(1),
+                  flex: 20,
+                  child: CustomizableNavigationBarIcon(
+                    shortcutAppSettingKey: "customNavBarShortcut1",
+                    afterSet: () {
+                      onItemTapped(1, allowReApply: true);
+                    },
+                    navigationBarIconBuilder: (NavBarIconData iconData) {
+                      return NavBarIcon(
+                        icon: iconData.iconData,
+                        customIconScale: iconData.iconScale,
+                        onItemTapped: onItemTapped,
+                        navigationBarIndex: 1,
+                        currentNavigationBarIndex: navigationBarIndex,
+                      );
+                    },
+                  ),
                 ),
-              ),
-              NavBarSpaceButton(
-                onPress: () => onItemTapped(3),
-                flex: 9,
-                child: Container(),
-              ),
-            ],
+                NavBarSpaceButton(
+                  onPress: () => onItemTapped(2),
+                  flex: 20,
+                  child: CustomizableNavigationBarIcon(
+                    shortcutAppSettingKey: "customNavBarShortcut2",
+                    afterSet: () {
+                      onItemTapped(2, allowReApply: true);
+                    },
+                    navigationBarIconBuilder: (NavBarIconData iconData) {
+                      return NavBarIcon(
+                        icon: iconData.iconData,
+                        customIconScale: iconData.iconScale,
+                        onItemTapped: onItemTapped,
+                        navigationBarIndex: 2,
+                        currentNavigationBarIndex: navigationBarIndex,
+                      );
+                    },
+                  ),
+                ),
+                NavBarSpaceButton(
+                  onPress: () => onItemTapped(3),
+                  flex: 20,
+                  child: NavBarIcon(
+                    onItemTapped: onItemTapped,
+                    icon: navBarIconsData["more"]!.iconData,
+                    navigationBarIndex: 3,
+                    currentNavigationBarIndex: navigationBarIndex,
+                  ),
+                ),
+                NavBarSpaceButton(
+                  onPress: () => onItemTapped(3),
+                  flex: 9,
+                  child: Container(),
+                ),
+              ],
+            ),
           ),
         ),
       );
     }
     // Android navbar
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: boxShadowSharp(context),
+    return ClipRRect(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(20),
+        topRight: Radius.circular(20),
       ),
-      child: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          backgroundColor: getBottomNavbarBackgroundColor(
-            colorScheme: Theme.of(context).colorScheme,
-            brightness: Theme.of(context).brightness,
-            lightDarkAccent: getColor(context, "lightDarkAccent"),
-          ),
-          surfaceTintColor: Colors.transparent,
-          indicatorColor: appStateSettings["materialYou"]
-              ? dynamicPastel(context, Theme.of(context).colorScheme.primary,
-                  amount: 0.6)
-              : null,
-          labelTextStyle: MaterialStateProperty.resolveWith((states) {
-            if (states.contains(MaterialState.selected)) {
-              return TextStyle(
-                fontFamily: appStateSettings["font"],
-                fontFamilyFallback: ['Inter'],
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.clip,
-              );
-            } else {
-              return TextStyle(
-                fontFamily: appStateSettings["font"],
-                fontFamilyFallback: ['Inter'],
-                fontSize: 13,
-                overflow: TextOverflow.clip,
-              );
-            }
-          }),
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        ),
-        child: NavigationBar(
-          animationDuration: Duration(milliseconds: 1000),
-          destinations: [
-            CustomizableNavigationBarIcon(
-              shortcutAppSettingKey: "customNavBarShortcut0",
-              afterSet: () {
-                onItemTapped(0, allowReApply: true);
-              },
-              navigationBarIconBuilder: (NavBarIconData iconData) {
-                return NavigationDestination(
-                  icon: Icon(iconData.iconData, size: iconData.iconSize),
-                  label: iconData.label.tr().length > 15 &&
-                          iconData.labelShort != null
-                      ? (iconData.labelShort ?? "").tr()
-                      : iconData.label.tr(),
-                  tooltip: "",
-                );
-              },
-            ),
-            CustomizableNavigationBarIcon(
-              shortcutAppSettingKey: "customNavBarShortcut1",
-              afterSet: () {
-                onItemTapped(1, allowReApply: true);
-              },
-              navigationBarIconBuilder: (NavBarIconData iconData) {
-                return NavigationDestination(
-                  icon: Icon(iconData.iconData, size: iconData.iconSize),
-                  label: iconData.label.tr().length > 15 &&
-                          iconData.labelShort != null
-                      ? (iconData.labelShort ?? "").tr()
-                      : iconData.label.tr(),
-                  tooltip: "",
-                );
-              },
-            ),
-            CustomizableNavigationBarIcon(
-              shortcutAppSettingKey: "customNavBarShortcut2",
-              afterSet: () {
-                onItemTapped(2, allowReApply: true);
-              },
-              navigationBarIconBuilder: (NavBarIconData iconData) {
-                return NavigationDestination(
-                  icon: Icon(iconData.iconData, size: iconData.iconSize),
-                  label: iconData.label.tr().length > 15 &&
-                          iconData.labelShort != null
-                      ? (iconData.labelShort ?? "").tr()
-                      : iconData.label.tr(),
-                  tooltip: "",
-                );
-              },
-            ),
-            NavigationDestination(
-              icon: Icon(navBarIconsData["more"]!.iconData),
-              label: navBarIconsData["more"]!.label.tr(),
-              tooltip: "",
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black.withOpacity(0.3)
+                  : Colors.black.withOpacity(0.08),
+              blurRadius: 20,
+              offset: Offset(0, -4),
+              spreadRadius: 0,
             ),
           ],
-          selectedIndex: navigationBarIndex,
-          onDestinationSelected: (value) {
-            onItemTapped(value);
-          },
+        ),
+        child: NavigationBarTheme(
+          data: NavigationBarThemeData(
+            backgroundColor: getBottomNavbarBackgroundColor(
+              colorScheme: Theme.of(context).colorScheme,
+              brightness: Theme.of(context).brightness,
+              lightDarkAccent: getColor(context, "lightDarkAccent"),
+            ),
+            surfaceTintColor: Colors.transparent,
+            indicatorColor: appStateSettings["materialYou"]
+                ? dynamicPastel(context, Theme.of(context).colorScheme.primary,
+                    amount: 0.6)
+                : null,
+            labelTextStyle: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.selected)) {
+                return TextStyle(
+                  fontFamily: appStateSettings["font"],
+                  fontFamilyFallback: ['Inter'],
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.clip,
+                );
+              } else {
+                return TextStyle(
+                  fontFamily: appStateSettings["font"],
+                  fontFamilyFallback: ['Inter'],
+                  fontSize: 13,
+                  overflow: TextOverflow.clip,
+                );
+              }
+            }),
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+          ),
+          child: NavigationBar(
+            animationDuration: Duration(milliseconds: 1000),
+            destinations: [
+              CustomizableNavigationBarIcon(
+                shortcutAppSettingKey: "customNavBarShortcut0",
+                afterSet: () {
+                  onItemTapped(0, allowReApply: true);
+                },
+                navigationBarIconBuilder: (NavBarIconData iconData) {
+                  return NavigationDestination(
+                    icon: Icon(iconData.iconData, size: iconData.iconSize),
+                    label: iconData.label.tr().length > 15 &&
+                            iconData.labelShort != null
+                        ? (iconData.labelShort ?? "").tr()
+                        : iconData.label.tr(),
+                    tooltip: "",
+                  );
+                },
+              ),
+              CustomizableNavigationBarIcon(
+                shortcutAppSettingKey: "customNavBarShortcut1",
+                afterSet: () {
+                  onItemTapped(1, allowReApply: true);
+                },
+                navigationBarIconBuilder: (NavBarIconData iconData) {
+                  return NavigationDestination(
+                    icon: Icon(iconData.iconData, size: iconData.iconSize),
+                    label: iconData.label.tr().length > 15 &&
+                            iconData.labelShort != null
+                        ? (iconData.labelShort ?? "").tr()
+                        : iconData.label.tr(),
+                    tooltip: "",
+                  );
+                },
+              ),
+              CustomizableNavigationBarIcon(
+                shortcutAppSettingKey: "customNavBarShortcut2",
+                afterSet: () {
+                  onItemTapped(2, allowReApply: true);
+                },
+                navigationBarIconBuilder: (NavBarIconData iconData) {
+                  return NavigationDestination(
+                    icon: Icon(iconData.iconData, size: iconData.iconSize),
+                    label: iconData.label.tr().length > 15 &&
+                            iconData.labelShort != null
+                        ? (iconData.labelShort ?? "").tr()
+                        : iconData.label.tr(),
+                    tooltip: "",
+                  );
+                },
+              ),
+              NavigationDestination(
+                icon: Icon(navBarIconsData["more"]!.iconData),
+                label: navBarIconsData["more"]!.label.tr(),
+                tooltip: "",
+              ),
+            ],
+            selectedIndex: navigationBarIndex,
+            onDestinationSelected: (value) {
+              onItemTapped(value);
+            },
+          ),
         ),
       ),
     );
@@ -564,46 +593,54 @@ class NavBarIcon extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
-        selected
-            ? ScaleIn(
-                duration: Duration(milliseconds: 200),
-                curve: Curves.fastOutSlowIn,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? Theme.of(context).colorScheme.secondaryContainer
-                        : Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.3),
-                  ),
-                  height: 52,
-                  width: 52,
-                  margin: EdgeInsetsDirectional.all(5),
-                ),
-              )
-            : Container(
-                color: Colors.transparent,
-                height: 52,
-                width: 52,
-                margin: EdgeInsetsDirectional.all(5),
-              ),
-        IconButton(
-          padding: EdgeInsetsDirectional.all(15),
-          color: selected
-              ? Theme.of(context).colorScheme.onSecondaryContainer
-              : null,
-          icon: Transform.scale(
-            scale: customIconScale,
-            child: Icon(
-              icon,
-              size: 27,
-            ),
+        AnimatedContainer(
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOutCubic,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: selected
+                ? (Theme.of(context).brightness == Brightness.dark
+                    ? Theme.of(context).colorScheme.secondaryContainer
+                    : Theme.of(context).colorScheme.secondary.withOpacity(0.25))
+                : Colors.transparent,
+            boxShadow: selected
+                ? [
+                    BoxShadow(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.2),
+                      blurRadius: 12,
+                      offset: Offset(0, 4),
+                      spreadRadius: 0,
+                    ),
+                  ]
+                : [],
           ),
-          onPressed: () {
-            onItemTapped(navigationBarIndex);
-          },
+          height: 52,
+          width: 52,
+          margin: EdgeInsetsDirectional.all(5),
+        ),
+        AnimatedScale(
+          scale: selected ? 1.1 : 1.0,
+          duration: Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+          child: IconButton(
+            padding: EdgeInsetsDirectional.all(15),
+            color: selected
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+            icon: Transform.scale(
+              scale: customIconScale,
+              child: Icon(
+                icon,
+                size: selected ? 28 : 26,
+              ),
+            ),
+            onPressed: () {
+              onItemTapped(navigationBarIndex);
+            },
+          ),
         ),
       ],
     );

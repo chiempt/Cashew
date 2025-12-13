@@ -56,11 +56,6 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void scrollToTop({int duration = 1200}) {
-    // if (_scrollController.offset <= 0) {
-    //   pushRoute(context, EditHomePage());
-    // } else {
-
-    // }
     _scrollController.animateTo(0,
         duration: Duration(
             milliseconds:
