@@ -13,6 +13,12 @@
   - Changed `lintOptions` to `lint` block (required for AGP 8.3+)
   - **Migrated to declarative plugins block**: Replaced `apply from` with `plugins { id "dev.flutter.flutter-gradle-plugin" }` and moved to top of file (required for Flutter 3.38.4)
   - **Updated desugar_jdk_libs**: 1.2.2 → 2.1.4 (required by flutter_local_notifications dependency)
+  - **Switched file_picker to pub.dev version**: Changed from git fork (`melWiss/flutter_file_picker`) to official pub.dev version `^10.3.7` to avoid V1 embedding compatibility issues
+  - **Fixed plugin V1 embedding compatibility**: Removed deprecated `registerWith` method and updated `setup` methods to remove dependency on `PluginRegistry.Registrar` (which was removed in newer Flutter versions) for:
+    - `image_picker_android`
+    - `in_app_purchase_android`
+    - Created automated patch scripts (`fix_image_picker_v1_embedding.sh` and `fix_in_app_purchase_v1_embedding.sh`) that run after `flutter pub get` to ensure fixes persist across dependency updates
+    - All plugins now only use V2 embedding which is the standard for modern Flutter apps
 - **Removed deprecated jcenter() repository**: Removed `jcenter()` from `settings.gradle` dependencyResolutionManagement repositories. JCenter was shut down in 2021 and causes build failures when Gradle tries to resolve dependencies from it. Flutter engine artifacts are now resolved from Google Maven, Maven Central, and local Maven repositories only.
 - **Installed Android SDK cmdline-tools**: Installed latest Android SDK command-line tools to `/Users/chiempham/Library/Android/sdk/cmdline-tools/latest/` to fix "Android sdkmanager not found" error when running `flutter doctor --android-licenses`. All Android SDK package licenses have been accepted.
 - **Fixed notification_listener_service namespace issue**: Created `fix_notification_listener_namespace.sh` script to automatically add missing `namespace` declaration to `notification_listener_service` plugin's build.gradle file. This is required for AGP 8.x compatibility. The script is automatically executed by `pub_get.sh` wrapper after each `flutter pub get` to ensure the fix persists across dependency updates.
