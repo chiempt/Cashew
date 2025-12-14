@@ -70,8 +70,8 @@ class GoogleAuthClient extends http.BaseClient {
   }
 }
 
-signIn.GoogleSignIn? googleSignIn;
 signIn.GoogleSignInAccount? googleUser;
+bool _googleSignInInitialized = false;
 
 Future<bool> signInGoogle(
     {BuildContext? context,
@@ -89,10 +89,8 @@ Future<bool> signInGoogle(
         googleUser != null &&
         !(await testIfHasGmailAccess())) {
       await signOutGoogle();
-      googleSignIn = null;
       settingsPageStateKey.currentState?.refreshState();
     } else if (googleUser == null) {
-      googleSignIn = null;
       settingsPageStateKey.currentState?.refreshState();
     }
 
@@ -116,28 +114,20 @@ Future<bool> signInGoogle(
               ]
             : [])
       ];
-      googleSignIn = getPlatform() == PlatformOS.isIOS
-          ? signIn.GoogleSignIn(
-              clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
-              scopes: scopes)
-          : signIn.GoogleSignIn.standard(scopes: scopes);
-      // googleSignIn?.currentUser?.clearAuthCache();
+      final signIn.GoogleSignIn googleSignInInstance =
+          signIn.GoogleSignIn.instance;
+      if (!_googleSignInInitialized) {
+        await googleSignInInstance.initialize(
+          clientId: getPlatform() == PlatformOS.isIOS
+              ? DefaultFirebaseOptions.currentPlatform.iosClientId
+              : null,
+        );
+        _googleSignInInitialized = true;
+      }
 
       final signIn.GoogleSignInAccount? account = silentSignIn == true
-          ?
-          // kIsWeb
-          //     ? await googleSignIn?.signInSilently()
-          // Google Sign-in silent on web no longer gives access to the scopes
-          // https://pub.dev/packages/google_sign_in_web#differences-between-google-identity-services-sdk-and-google-sign-in-for-web-sdk
-          // await googleSignIn?.signInSilently().then((value) async {
-          //     return await googleSignIn?.signIn();
-          //   })
-          // Currently we do not use silent sign in anymore, as it does not allow any access
-          // to GDrive or other tools, so there is no point to get the username/email form silent
-          kIsWeb
-              ? await googleSignIn?.signIn()
-              : await googleSignIn?.signInSilently()
-          : await googleSignIn?.signIn();
+          ? await googleSignInInstance.attemptLightweightAuthentication()
+          : await googleSignInInstance.authenticate(scopeHint: scopes);
 
       if (account != null) {
         // print("ACCOUNT");
@@ -197,10 +187,35 @@ void refreshUIAfterLoginChange() {
   settingsGoogleAccountLoginButtonKey.currentState?.refreshState();
 }
 
+Future<Map<String, String>> getGoogleAuthHeaders() async {
+  final signIn.GoogleSignInAuthorizationClient authClient =
+      googleUser!.authorizationClient;
+  final List<String> scopes = [
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/userinfo.email",
+    drive.DriveApi.driveAppdataScope,
+    drive.DriveApi.driveFileScope,
+    gMail.GmailApi.gmailReadonlyScope,
+    gMail.GmailApi.gmailModifyScope,
+  ];
+  final signIn.GoogleSignInClientAuthorization? auth =
+      await authClient.authorizationForScopes(scopes);
+  if (auth == null) {
+    final signIn.GoogleSignInClientAuthorization authPrompted =
+        await authClient.authorizeScopes(scopes);
+    return {
+      'Authorization': 'Bearer ${authPrompted.accessToken}',
+    };
+  }
+  return {
+    'Authorization': 'Bearer ${auth.accessToken}',
+  };
+}
+
 Future<bool> testIfHasGmailAccess() async {
   print("TESTING GMAIL");
   try {
-    final authHeaders = await googleUser!.authHeaders;
+    final authHeaders = await getGoogleAuthHeaders();
     final authenticateClient = GoogleAuthClient(authHeaders);
     gMail.GmailApi gmailApi = gMail.GmailApi(authenticateClient);
     gMail.ListMessagesResponse results = await gmailApi.users.messages
@@ -214,7 +229,7 @@ Future<bool> testIfHasGmailAccess() async {
 }
 
 Future<bool> signOutGoogle() async {
-  await googleSignIn?.signOut();
+  await signIn.GoogleSignIn.instance.signOut();
   googleUser = null;
   await updateSettings("currentUserEmail", "", updateGlobalState: false);
   await updateSettings("hasSignedIn", false, updateGlobalState: false);
@@ -405,7 +420,7 @@ Future<void> createBackup(
 
     DBFileInfo currentDBFileInfo = await getCurrentDBFileInfo();
 
-    final authHeaders = await googleUser!.authHeaders;
+    final authHeaders = await getGoogleAuthHeaders();
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
 
@@ -470,7 +485,7 @@ Future<void> deleteRecentBackups(context, amountToKeep,
       loadingIndeterminateKey.currentState?.setVisibility(true);
     }
 
-    final authHeaders = await googleUser!.authHeaders;
+    final authHeaders = await getGoogleAuthHeaders();
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
 
@@ -742,7 +757,7 @@ class GoogleAccountLoginButtonState extends State<GoogleAccountLoginButton> {
 
 Future<(drive.DriveApi? driveApi, List<drive.File>?)> getDriveFiles() async {
   try {
-    final authHeaders = await googleUser!.authHeaders;
+    final authHeaders = await getGoogleAuthHeaders();
     final authenticateClient = GoogleAuthClient(authHeaders);
     drive.DriveApi driveApi = drive.DriveApi(authenticateClient);
 

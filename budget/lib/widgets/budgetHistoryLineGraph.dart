@@ -494,7 +494,6 @@ class _BudgetHistoryLineGraphState extends State<_BudgetHistoryLineGraph> {
                           amountLight: 0.2,
                           amountDark: 0.05,
                         ).withOpacity(0.8),
-              tooltipRoundedRadius: 8,
               fitInsideVertically: true,
               fitInsideHorizontally: true,
               tooltipPadding:

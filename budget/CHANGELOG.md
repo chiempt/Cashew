@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### Android Build Fixes
+- **Gradle & Kotlin Upgrade**: Fixed "Unresolved reference: filePermissions" and "BaseVariant" errors (Flutter 3.38.4 user branch requires Kotlin 2.0+):
+  - Kotlin: 1.9.0 → 2.0.21 (required for Flutter 3.38.4's new Kotlin API, latest 2.0.x)
+  - Gradle Plugin: 7.3.1 → 8.9.1 (required for androidx.core:core-ktx:1.17.0 and androidx.core:core:1.17.0 compatibility)
+  - Gradle Wrapper: 8.0 → 8.11.1 (required for AGP 8.9.1 compatibility)
+  - Updated settings.gradle plugin versions to match build.gradle (AGP 8.9.1, Kotlin 2.0.21)
+  - Google Services: 4.3.14 → 4.4.0
+  - Added `namespace` to build.gradle (required for Gradle 8.x)
+  - Changed `lintOptions` to `lint` block (required for AGP 8.3+)
+  - **Migrated to declarative plugins block**: Replaced `apply from` with `plugins { id "dev.flutter.flutter-gradle-plugin" }` and moved to top of file (required for Flutter 3.38.4)
+  - **Updated desugar_jdk_libs**: 1.2.2 → 2.1.4 (required by flutter_local_notifications dependency)
+- **Removed deprecated jcenter() repository**: Removed `jcenter()` from `settings.gradle` dependencyResolutionManagement repositories. JCenter was shut down in 2021 and causes build failures when Gradle tries to resolve dependencies from it. Flutter engine artifacts are now resolved from Google Maven, Maven Central, and local Maven repositories only.
+- **Installed Android SDK cmdline-tools**: Installed latest Android SDK command-line tools to `/Users/chiempham/Library/Android/sdk/cmdline-tools/latest/` to fix "Android sdkmanager not found" error when running `flutter doctor --android-licenses`. All Android SDK package licenses have been accepted.
+- **Fixed notification_listener_service namespace issue**: Created `fix_notification_listener_namespace.sh` script to automatically add missing `namespace` declaration to `notification_listener_service` plugin's build.gradle file. This is required for AGP 8.x compatibility. The script is automatically executed by `pub_get.sh` wrapper after each `flutter pub get` to ensure the fix persists across dependency updates.
+
 ### UI/UX Improvements
 - **Enhanced Bottom Navigation Bar Design**: 
   - Added rounded top corners (20px radius) for modern look
@@ -37,7 +52,8 @@
   - Created helper scripts for build process patching
 
 ### Package Warnings
-- **Package warnings handling**: The warnings about `file_picker` missing inline implementations for desktop platforms (Linux, macOS, Windows) are from the git fork being used (`melWiss/flutter_file_picker`). These warnings don't affect mobile/web functionality and are expected until the fork maintainer adds inline implementations. No action needed as app primarily targets mobile platforms.
+- **Disabled desktop platforms support**: Disabled Linux, macOS, and Windows desktop platforms in Flutter config (`flutter config --no-enable-linux-desktop --no-enable-macos-desktop --no-enable-windows-desktop`) since the app only targets mobile (Android/iOS) and web platforms. This reduces unnecessary plugin resolution for desktop platforms.
+- **Package warnings handling**: The warnings about `file_picker` missing inline implementations for desktop platforms (Linux, macOS, Windows) are from the git fork being used (`melWiss/flutter_file_picker`). These warnings don't affect mobile/web functionality and are expected until the fork maintainer adds inline implementations. The warnings can be filtered when running `flutter pub get` if needed.
 
 
 

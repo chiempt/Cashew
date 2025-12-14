@@ -1,7 +1,7 @@
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/accountAndBackup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart' as signIn;
 import 'package:cloud_firestore/cloud_firestore.dart' hide Transaction;
 
 OAuthCredential? _credential;
@@ -44,11 +44,21 @@ Future<FirebaseFirestore?> firebaseGetDBInstance() async {
       }
       // GoogleSignInAccount? googleUser = googleUser;
 
-      GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      final signIn.GoogleSignInAuthentication googleAuth =
+          googleUser!.authentication;
+      final signIn.GoogleSignInAuthorizationClient authClient =
+          googleUser!.authorizationClient;
+      final List<String> scopes = [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+      ];
+      final signIn.GoogleSignInClientAuthorization? auth =
+          await authClient.authorizationForScopes(scopes);
+      final String? accessToken = auth?.accessToken;
 
       _credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
+        accessToken: accessToken,
+        idToken: googleAuth.idToken,
       );
 
       await FirebaseAuth.instance.signInWithCredential(_credential!);
