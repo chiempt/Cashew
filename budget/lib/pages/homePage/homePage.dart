@@ -254,39 +254,51 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   controller: _scrollController,
                   children: [
                     PreviewDemoWarning(),
-                    if (useSmallBanner) SizedBox(height: 13),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        useSmallBanner
-                            ? Expanded(
-                                child: HomePageWelcomeBannerSmall(
-                                  showUsername: showUsername,
-                                  showGreeting: showGreeting,
-                                  username: appStateSettings["username"] ?? "",
+                    if (useSmallBanner) SizedBox(height: 20),
+                    Padding(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: getHorizontalPaddingConstrained(context),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          useSmallBanner
+                              ? Expanded(
+                                  child: HomePageWelcomeBannerSmall(
+                                    showUsername: showUsername,
+                                    showGreeting: showGreeting,
+                                    username:
+                                        appStateSettings["username"] ?? "",
+                                  ),
+                                )
+                              : SizedBox.shrink(),
+                          Tooltip(
+                            message: "edit-home".tr(),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius: BorderRadius.circular(12),
+                                onTap: () {
+                                  pushRoute(context, EditHomePage());
+                                },
+                                child: Container(
+                                  padding: EdgeInsetsDirectional.all(12),
+                                  child: Icon(
+                                    appStateSettings["outlinedIcons"]
+                                        ? Icons.more_vert_outlined
+                                        : Icons.more_vert_rounded,
+                                    size: 24,
+                                  ),
                                 ),
-                              )
-                            : SizedBox.shrink(),
-                        Tooltip(
-                          message: "edit-home".tr(),
-                          child: IconButton(
-                            padding: EdgeInsetsDirectional.all(15),
-                            onPressed: () {
-                              pushRoute(context, EditHomePage());
-                            },
-                            icon: Icon(appStateSettings["outlinedIcons"]
-                                ? Icons.more_vert_outlined
-                                : Icons.more_vert_rounded),
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    // Wipe all remaining pixels off - sometimes graphics artifacts are left behind
-                    Container(
-                        height: 1,
-                        color: Theme.of(context).colorScheme.background),
+                    SizedBox(height: 8),
 
                     showWelcomeBanner
                         ? ConstrainedBox(
@@ -296,12 +308,15 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         isHomePageSpace: true) /
                                     1.34),
                             child: Container(
-                              // Subtract one (1) here because of the thickness of the wiper above
                               alignment: AlignmentDirectional.bottomStart,
                               padding: EdgeInsetsDirectional.only(
-                                  start: 9,
-                                  bottom: enableDoubleColumn(context) ? 10 : 17,
-                                  end: 9),
+                                  start:
+                                      getHorizontalPaddingConstrained(context) +
+                                          9,
+                                  bottom: enableDoubleColumn(context) ? 16 : 24,
+                                  end:
+                                      getHorizontalPaddingConstrained(context) +
+                                          9),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment:
@@ -322,13 +337,31 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               ),
                             ),
                           )
-                        : SizedBox(height: 5),
+                        : SizedBox(height: 12),
                     // Not full screen
                     if (enableDoubleColumn(context) != true) ...[
                       KeepAliveClientMixin(child: HomePageRatingBox()),
-                      for (String sectionKey
-                          in appStateSettings["homePageOrder"])
-                        homePageSections[sectionKey] ?? SizedBox.shrink(),
+                      for (int index = 0;
+                          index < appStateSettings["homePageOrder"].length;
+                          index++) ...[
+                        if (homePageSections[appStateSettings["homePageOrder"]
+                                [index]] !=
+                            null)
+                          Padding(
+                            padding: EdgeInsetsDirectional.only(
+                              top: index == 0 ? 8 : 16,
+                              bottom: index ==
+                                      appStateSettings["homePageOrder"].length -
+                                          1
+                                  ? 0
+                                  : 0,
+                            ),
+                            child: homePageSections[
+                                appStateSettings["homePageOrder"][index]]!,
+                          )
+                        else
+                          SizedBox.shrink(),
+                      ],
                     ],
                     // Full screen top section
                     if (enableDoubleColumn(context) == true) ...[
@@ -389,16 +422,12 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       }),
                     SizedBox(
                       height: enableDoubleColumn(context) == true
-                          ? 40
+                          ? 48
                           : areAllDisabledAfterTransactionsList(
                                   homePageSections)
-                              ? 25
-                              : 73,
+                              ? 32
+                              : 80,
                     ),
-                    // Wipe all remaining pixels off - sometimes graphics artifacts are left behind
-                    Container(
-                        height: 1,
-                        color: Theme.of(context).colorScheme.background),
                   ],
                 ),
               ),
@@ -462,14 +491,15 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
             )
           : Padding(
               key: ValueKey(2),
-              padding: const EdgeInsetsDirectional.only(bottom: 13),
+              padding: const EdgeInsetsDirectional.only(bottom: 16),
               child: Container(
                 padding: EdgeInsetsDirectional.only(
-                    start: 15, end: 15, bottom: 18, top: 18),
-                margin: EdgeInsetsDirectional.symmetric(horizontal: 13),
+                    start: 20, end: 20, bottom: 24, top: 24),
+                margin: EdgeInsetsDirectional.symmetric(
+                    horizontal: getHorizontalPaddingConstrained(context)),
                 decoration: BoxDecoration(
                   borderRadius:
-                      BorderRadiusDirectional.all(Radius.circular(15)),
+                      BorderRadiusDirectional.all(Radius.circular(20)),
                   color: getColor(context, "lightDarkAccentHeavyLight"),
                   boxShadow: boxShadowCheck(boxShadowGeneral(context)),
                 ),
@@ -477,15 +507,16 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                   children: [
                     TextFont(
                       text: "enjoying-cashew-question".tr(),
-                      fontSize: 22,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                       textAlign: TextAlign.center,
                       maxLines: 3,
+                      letterSpacing: -0.3,
                     ),
-                    SizedBox(height: 7),
+                    SizedBox(height: 10),
                     Padding(
                       padding:
-                          const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                          const EdgeInsetsDirectional.symmetric(horizontal: 8),
                       child: TextFont(
                         text: "consider-rating".tr(),
                         fontSize: 16,
@@ -493,7 +524,7 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                         maxLines: 5,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 16),
                     ScalingStars(
                       selectedStars: 5,
                       onTap: (i) {
@@ -513,7 +544,7 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                       loop: true,
                       loopDelay: Duration(milliseconds: 1900),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 20),
                     Row(
                       children: [
                         Expanded(
@@ -531,7 +562,7 @@ class _HomePageRatingBoxState extends State<HomePageRatingBox> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 12),
                         Expanded(
                           child: Button(
                             label: "rate".tr(),
@@ -556,6 +587,7 @@ class HomePageBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Positioned.fill(
       child: Container(
         decoration: BoxDecoration(
@@ -569,8 +601,8 @@ class HomePageBackground extends StatelessWidget {
                 Theme.of(context).brightness == Brightness.light
                     ? Theme.of(context).colorScheme.primaryContainer
                     : Theme.of(context).colorScheme.secondaryContainer,
-                amountLight: 0.15,
-                amountDark: 0.08,
+                amountLight: 0.12,
+                amountDark: 0.06,
               ),
               Theme.of(context).colorScheme.background,
             ],
@@ -580,8 +612,10 @@ class HomePageBackground extends StatelessWidget {
         child: Theme.of(context).brightness == Brightness.light
             ? CustomPaint(
                 painter: _SubtlePatternPainter(
-                  color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.03),
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primary
+                      .withOpacity(isDark ? 0.02 : 0.025),
                 ),
               )
             : null,
@@ -601,8 +635,8 @@ class _SubtlePatternPainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill;
 
-    final spacing = 120.0;
-    final radius = 2.0;
+    final spacing = 140.0;
+    final radius = 1.5;
 
     for (double x = 0; x < size.width + spacing; x += spacing) {
       for (double y = 0; y < size.height + spacing; y += spacing) {

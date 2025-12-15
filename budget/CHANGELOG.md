@@ -40,6 +40,52 @@
 - **Fixed "Looking up a deactivated widget's ancestor is unsafe" error**: Fixed runtime error in `openPopup`, `openPopupCustom`, and `openLoadingPopup` functions where `Theme.of(context)` and `MediaQuery.paddingOf(context)` were being called with context from `pageBuilder` callback parameter, which may be deactivated. Wrapped dialog content in `Builder` widget to ensure valid Theme context is available when accessing Theme and MediaQuery.
 
 ### UI/UX Improvements
+- **Modern Black Primary Color**: Implemented sophisticated black primary color for the entire app:
+  - **Light Mode**: `#0F172A` (Slate 900) - modern, elegant black with subtle blue undertone
+  - **Dark Mode**: `#E2E8F0` (Slate 200) - light gray for excellent visibility in dark theme
+  - Provides premium, sophisticated, and ultra-modern appearance
+  - Perfect for high-end financial/budget apps - very contemporary and refined
+  - Excellent contrast in light mode, optimal visibility in dark mode
+  - Applied adaptively based on theme brightness
+  - Overrides primary color in `getColorScheme()` while maintaining accent color flexibility for other UI elements
+  - This modern black color scheme provides a premium, minimalist, and sophisticated look
+- **Home Page UI Modernization**: Enhanced home page with modern design improvements:
+  - **Improved Spacing**: Increased spacing between sections (16px) for better visual hierarchy and breathing room
+  - **Modern Header**: Enhanced header layout with better padding, modernized icon button with Material InkWell ripple effect
+  - **Refined Background**: Subtle gradient adjustments (reduced opacity from 0.15 to 0.12 for light mode) and refined pattern (spacing 140px, radius 1.5px) for cleaner look
+  - **Better Section Spacing**: Added intelligent spacing between sections with proper top padding (8px for first, 16px for others)
+  - **Enhanced Rating Box**: Modernized rating box with increased padding (20px), larger border radius (20px), improved typography (24px title with -0.3 letter spacing), and better button spacing
+  - **Increased Bottom Padding**: Extended bottom padding from 73px to 80px for better scroll experience
+  - Overall cleaner, more spacious, and modern appearance
+- **Android Bottom Navigation Bar**: Replaced Material NavigationBar with Google Nav Bar (`google_nav_bar` package) for Android platform:
+  - Modern Google-style navigation bar with smooth animations and professional styling
+  - **FontAwesome Icons**: Switched to FontAwesome icons for main navigation items (home, transactions, budgets, more) for better visual consistency
+  - **Enhanced Active State**: Improved active state visibility in light theme with full opacity primary color and optimized background color
+  - Enhanced dark theme support: Active color automatically lightened for better visibility in dark mode
+  - Improved spacing and padding for better touch targets and visual hierarchy
+  - Professional typography with custom font support and letter spacing
+  - Smooth cubic easing animations (400ms duration)
+  - Adaptive colors for ripple and hover effects based on theme
+  - Maintains all existing functionality (customizable shortcuts, dark/light mode support)
+  - Long press on customizable tabs (first 3 tabs) to change shortcuts
+  - iOS navigation bar remains unchanged
+  - Supports Material You theming and custom accent colors
+- **Home Page Default Order**: Optimized default home page section order for better user flow:
+  1. **Wallets** (Tài khoản) - Primary account balance and switcher
+  2. **Wallets List** (Danh sách tài khoản) - All accounts overview
+  3. **All Spending Summary** (Tổng quan Thu & Chi) - Overall financial summary
+  4. **Budgets** (Ngân sách) - Active budgets for expense control
+  5. **Transactions List** (Danh sách giao dịch) - Recent transactions
+  6. **Spending Graph** (Biểu đồ xu hướng) - Spending trends over time
+  7. **Pie Chart** (Biểu đồ tròn) - Category breakdown
+  8. **Heat Map** (Bản đồ nhiệt) - Time-based spending analysis
+  9. **Objectives** (Mục tiêu) - Financial goals
+  10. **Net Worth** (Tài sản ròng) - Overall net worth
+  11. **Overdue Upcoming** (Giao dịch sắp đến) - Upcoming/overdue transactions
+  12. **Credit Debts** (Nợ tín dụng) - Credit card debts
+  13. **Objective Loans** (Khoản vay) - Loan objectives
+  - Applied to both regular layout (`homePageOrder`) and full-screen double-column layout (`homePageOrderFullScreen`)
+  - Order prioritizes: Account info → Financial overview → Budget control → Transaction details → Analytics → Goals
 - **Enhanced Bottom Navigation Bar Design**: 
   - Added rounded top corners (20px radius) for modern look
   - Improved shadow effects with better blur and offset for depth

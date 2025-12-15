@@ -3,6 +3,7 @@ import 'package:budget/functions.dart';
 import 'package:budget/struct/settings.dart';
 import 'package:budget/widgets/moreIcons.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavBarIconData {
   NavBarIconData({
@@ -29,25 +30,17 @@ Map<String, NavBarIconData> navBarIconsData = getNavBarIconsData();
 Map<String, NavBarIconData> getNavBarIconsData() {
   return {
     "home": NavBarIconData(
-      iconData: appStateSettings["outlinedIcons"]
-          ? Icons.home_outlined
-          : Icons.home_rounded,
+      iconData: FontAwesomeIcons.house,
       label: "home",
       navigationIndexedStackIndex: 0,
     ),
     "transactions": NavBarIconData(
-      iconData: appStateSettings["outlinedIcons"]
-          ? Icons.payments_outlined
-          : Icons.payments_rounded,
+      iconData: FontAwesomeIcons.receipt,
       label: "transactions",
       navigationIndexedStackIndex: 1,
     ),
     "budgets": NavBarIconData(
-      iconData: appStateSettings["outlinedIcons"]
-          ? Icons.donut_small_outlined
-          : MoreIcons.chart_pie,
-      iconScale: appStateSettings["outlinedIcons"] ? 1 : 0.87,
-      iconSize: appStateSettings["outlinedIcons"] ? 24 : 20,
+      iconData: FontAwesomeIcons.chartPie,
       label: "budgets",
       navigationIndexedStackIndex: 2,
     ),
@@ -104,9 +97,7 @@ Map<String, NavBarIconData> getNavBarIconsData() {
       navigationIndexedStackIndex: 4,
     ),
     "more": NavBarIconData(
-      iconData: appStateSettings["outlinedIcons"]
-          ? Icons.more_horiz_outlined
-          : Icons.more_horiz_rounded,
+      iconData: FontAwesomeIcons.ellipsis,
       label: "more",
       navigationIndexedStackIndex: 4,
     ),

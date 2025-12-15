@@ -383,6 +383,12 @@ bool isGrayScale(Color color, {int threshold = 10}) {
 }
 
 ColorScheme getColorScheme(Brightness brightness) {
+  // Modern, sophisticated black primary color for financial app
+  // Slate 900 (#0F172A) - modern, elegant black with subtle blue undertone
+  // This provides a premium, sophisticated look - very modern and refined
+  // Perfect for high-end financial apps, provides excellent contrast in light mode
+  const Color modernBlackPrimary = Color(0xFF0F172A);
+
   if (isGrayScale(
     getSettingConstants(appStateSettings)["accentColor"],
     threshold: 15,
@@ -397,8 +403,9 @@ ColorScheme getColorScheme(Brightness brightness) {
           ? lightenPastel(getSettingConstants(appStateSettings)["accentColor"],
               amount: 0.91)
           : Colors.white,
-    );
+    ).copyWith(primary: modernBlackPrimary);
   } else {
+    // For dark mode, use a lighter version of the black for better visibility
     return ColorScheme.fromSeed(
       seedColor: getSettingConstants(appStateSettings)["accentColor"],
       brightness: Brightness.dark,
@@ -409,7 +416,9 @@ ColorScheme getColorScheme(Brightness brightness) {
                   getSettingConstants(appStateSettings)["accentColor"],
                   amount: 0.92)
               : Colors.black,
-    );
+    ).copyWith(
+        primary: Color(
+            0xFFE2E8F0)); // Slate 200 for dark mode - light gray for visibility
   }
 }
 
