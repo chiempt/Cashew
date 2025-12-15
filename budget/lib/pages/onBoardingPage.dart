@@ -25,6 +25,7 @@ import 'package:budget/functions.dart';
 import 'package:budget/database/initializeDefaultDatabase.dart';
 
 import 'package:budget/widgets/pageIndicator.dart';
+import 'package:budget/widgets/fadeIn.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({
@@ -71,13 +72,13 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
 
   bool showImage = false;
   final Image imageLanding1 = Image(
-    image: AssetImage("assets/landing/Graph.png"),
+    image: AssetImage("assets/landing/o1_new.png"),
   );
   final Image imageLanding2 = Image(
-    image: AssetImage("assets/landing/BankOrPig.png"),
+    image: AssetImage("assets/landing/o2_new.png"),
   );
   final Image imageLanding3 = Image(
-    image: AssetImage("assets/landing/PigBank.png"),
+    image: AssetImage("assets/landing/o3_new.png"),
   );
 
   @override
@@ -174,16 +175,16 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
       nextNavigation();
     } else {
       controller.nextPage(
-        duration: Duration(milliseconds: 1100),
-        curve: ElasticOutCurve(1.3),
+        duration: Duration(milliseconds: 600),
+        curve: Curves.easeInOutCubic,
       );
     }
   }
 
   void previousOnBoardPage() {
     controller.previousPage(
-      duration: Duration(milliseconds: 1100),
-      curve: ElasticOutCurve(1.3),
+      duration: Duration(milliseconds: 600),
+      curve: Curves.easeInOutCubic,
     );
   }
 
@@ -228,99 +229,176 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
       //   ],
       // ),
       OnBoardPage(
+        pageIndex: 0,
+        controller: controller,
         widgets: [
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.sizeOf(context).height <=
-                        MediaQuery.sizeOf(context).width
-                    ? MediaQuery.sizeOf(context).height * 0.5
-                    : 300),
-            child: imageLanding1,
-          ),
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
-            child: TextFont(
-              text: "onboarding-title-1".tr(namedArgs: {"app": globalAppName}),
-              fontWeight: FontWeight.bold,
-              textAlign: TextAlign.center,
-              fontSize: 25,
-              maxLines: 5,
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 100),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Container(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).height <=
+                          MediaQuery.sizeOf(context).width
+                      ? MediaQuery.sizeOf(context).height * 0.5
+                      : 300),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  // BoxShadow(
+                  //   color: Theme.of(context)
+                  //       .colorScheme
+                  //       .secondary
+                  //       .withOpacity(0.15),
+                  //   blurRadius: 30,
+                  //   offset: Offset(0, 10),
+                  //   spreadRadius: 0,
+                  // ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: imageLanding1,
+              ),
             ),
           ),
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
-            child: TextFont(
-              text: "onboarding-info-1".tr(),
-              textAlign: TextAlign.center,
-              fontSize: 16,
-              maxLines: 5,
+          SizedBox(height: 30),
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 200),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
+              child: TextFont(
+                text:
+                    "onboarding-title-1".tr(namedArgs: {"app": globalAppName}),
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center,
+                fontSize: 28,
+                maxLines: 5,
+                letterSpacing: -0.5,
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 300),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
+              child: TextFont(
+                text: "onboarding-info-1".tr(),
+                textAlign: TextAlign.center,
+                fontSize: 17,
+                maxLines: 5,
+                textColor: getColor(context, "black").withOpacity(0.6),
+              ),
             ),
           ),
           SizedBox(height: 55),
         ],
         bottomWidget: widget.showPreviewDemoButton
-            ? PreviewDemoButton(
-                nextNavigation: nextNavigation,
+            ? SlideFadeTransition(
+                delayStart: Duration(milliseconds: 400),
+                animationDuration: Duration(milliseconds: 700),
+                curve: Curves.easeOutCubic,
+                child: PreviewDemoButton(
+                  nextNavigation: nextNavigation,
+                ),
               )
             : null,
       ),
       OnBoardPage(
+        pageIndex: 1,
+        controller: controller,
         widgets: [
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.sizeOf(context).height <=
-                        MediaQuery.sizeOf(context).width
-                    ? MediaQuery.sizeOf(context).height * 0.5
-                    : 300),
-            child: imageLanding2,
-          ),
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
-            child: TextFont(
-              text: "onboarding-title-2".tr(),
-              fontWeight: FontWeight.bold,
-              textAlign: TextAlign.center,
-              fontSize: 25,
-              maxLines: 5,
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 100),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Container(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).height <=
+                          MediaQuery.sizeOf(context).width
+                      ? MediaQuery.sizeOf(context).height * 0.5
+                      : 300),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  // BoxShadow(
+                  //   color: Theme.of(context)
+                  //       .colorScheme
+                  //       .secondary
+                  //       .withOpacity(0.15),
+                  //   blurRadius: 30,
+                  //   offset: Offset(0, 10),
+                  //   spreadRadius: 0,
+                  // ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: imageLanding2,
+              ),
             ),
           ),
-          SizedBox(height: 10),
-          BudgetDetails(
-            determineBottomButton: () {},
-            setSelectedAmount: (amount, _) {
-              setState(() {
-                selectedAmount = amount;
-              });
-            },
-            initialSelectedAmount: selectedAmount,
-            setSelectedPeriodLength: (length) {
-              setState(() {
-                selectedPeriodLength = length;
-              });
-            },
-            initialSelectedPeriodLength: selectedPeriodLength,
-            setSelectedRecurrence: (recurrence) {
-              setState(() {
-                selectedRecurrence = recurrence;
-              });
-            },
-            initialSelectedRecurrence: selectedRecurrence,
-            setSelectedStartDate: (date) {
-              setState(() {
-                selectedStartDate = date;
-              });
-            },
-            initialSelectedStartDate: selectedStartDate,
-            setSelectedEndDate: (date) {
-              setState(() {
-                selectedEndDate = date;
-              });
-            },
-            initialSelectedEndDate: selectedEndDate,
+          SizedBox(height: 30),
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 200),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
+              child: TextFont(
+                text: "onboarding-title-2".tr(),
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center,
+                fontSize: 28,
+                maxLines: 5,
+                letterSpacing: -0.5,
+              ),
+            ),
           ),
+          SizedBox(height: 20),
+          // SlideFadeTransition(
+          //   delayStart: Duration(milliseconds: 300),
+          //   animationDuration: Duration(milliseconds: 700),
+          //   curve: Curves.easeOutCubic,
+          //   child: BudgetDetails(
+          //     determineBottomButton: () {},
+          //     setSelectedAmount: (amount, _) {
+          //       setState(() {
+          //         selectedAmount = amount;
+          //       });
+          //     },
+          //     initialSelectedAmount: selectedAmount,
+          //     setSelectedPeriodLength: (length) {
+          //       setState(() {
+          //         selectedPeriodLength = length;
+          //       });
+          //     },
+          //     initialSelectedPeriodLength: selectedPeriodLength,
+          //     setSelectedRecurrence: (recurrence) {
+          //       setState(() {
+          //         selectedRecurrence = recurrence;
+          //       });
+          //     },
+          //     initialSelectedRecurrence: selectedRecurrence,
+          //     setSelectedStartDate: (date) {
+          //       setState(() {
+          //         selectedStartDate = date;
+          //       });
+          //     },
+          //     initialSelectedStartDate: selectedStartDate,
+          //     setSelectedEndDate: (date) {
+          //       setState(() {
+          //         selectedEndDate = date;
+          //       });
+          //     },
+          //     initialSelectedEndDate: selectedEndDate,
+          //   ),
+          // ),
           // This is pretty confusing, users can enable this later by editing the budget
           // Opacity(
           //   opacity: 0.8,
@@ -343,222 +421,286 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
           //   ),
           // ),
 
-          StreamBuilder<AllWallets>(
-            stream: database.watchAllWalletsIndexed(),
-            builder: (context, snapshot) {
-              TransactionWallet? primaryWallet = snapshot
-                  .data?.indexedByPk[appStateSettings["selectedWalletPk"]];
-              if (primaryWallet != null) {
-                return Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 15),
-                  child: LowKeyButton(
-                    onTap: () {
-                      openBottomSheet(
-                        context,
-                        SizedBox.shrink(),
-                        customBuilder:
-                            (context2, scrollController, sheetState) {
-                          return CustomScrollView(
-                            controller: scrollController,
-                            slivers: [
-                              SliverToBoxAdapter(
-                                child: PopupFramework(
-                                  title: "select-primary-currency".tr(),
-                                  subtitle:
-                                      "select-primary-currency-description"
-                                          .tr(),
-                                  child: SizedBox.shrink(),
-                                  bottomSafeAreaExtraPadding: false,
-                                ),
-                              ),
-                              CurrencyPicker(
-                                showExchangeRateInfoNotice: false,
-                                onSelected: (selectedCurrency) {
-                                  popRoute(context);
-                                  database.createOrUpdateWallet(
-                                      primaryWallet.copyWith(
-                                          currency: Value(selectedCurrency)));
-                                },
-                                initialCurrency: primaryWallet.currency,
-                                onHasFocus: () {
-                                  // Disable scroll when focus - because iOS header height is different than that of Android.
-                                  // Future.delayed(Duration(milliseconds: 500), () {
-                                  //   addWalletPageKey.currentState?.scrollTo(250);
-                                  // });
-                                },
-                                unSelectedColor: appStateSettings["materialYou"]
-                                    ? null
-                                    : getColor(context, "canvasContainer"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    text: "change-currency".tr(),
-                  ),
-                );
-              }
-              return SizedBox.shrink();
-            },
-          ),
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
-            child: TextFont(
-              text: "onboarding-info-2-1".tr(),
-              textAlign: TextAlign.center,
-              fontSize: 15,
-              maxLines: 5,
-              textColor: getColor(context, "black").withOpacity(0.35),
+          // SlideFadeTransition(
+          //   delayStart: Duration(milliseconds: 400),
+          //   animationDuration: Duration(milliseconds: 700),
+          //   curve: Curves.easeOutCubic,
+          //   child: StreamBuilder<AllWallets>(
+          //     stream: database.watchAllWalletsIndexed(),
+          //     builder: (context, snapshot) {
+          //       TransactionWallet? primaryWallet = snapshot
+          //           .data?.indexedByPk[appStateSettings["selectedWalletPk"]];
+          //       if (primaryWallet != null) {
+          //         return Padding(
+          //           padding: const EdgeInsetsDirectional.only(top: 15),
+          //           child: LowKeyButton(
+          //             onTap: () {
+          //               openBottomSheet(
+          //                 context,
+          //                 SizedBox.shrink(),
+          //                 customBuilder:
+          //                     (context2, scrollController, sheetState) {
+          //                   return CustomScrollView(
+          //                     controller: scrollController,
+          //                     slivers: [
+          //                       SliverToBoxAdapter(
+          //                         child: PopupFramework(
+          //                           title: "select-primary-currency".tr(),
+          //                           subtitle:
+          //                               "select-primary-currency-description"
+          //                                   .tr(),
+          //                           child: SizedBox.shrink(),
+          //                           bottomSafeAreaExtraPadding: false,
+          //                         ),
+          //                       ),
+          //                       CurrencyPicker(
+          //                         showExchangeRateInfoNotice: false,
+          //                         onSelected: (selectedCurrency) {
+          //                           popRoute(context);
+          //                           database.createOrUpdateWallet(
+          //                               primaryWallet.copyWith(
+          //                                   currency: Value(selectedCurrency)));
+          //                         },
+          //                         initialCurrency: primaryWallet.currency,
+          //                         onHasFocus: () {
+          //                           // Disable scroll when focus - because iOS header height is different than that of Android.
+          //                           // Future.delayed(Duration(milliseconds: 500), () {
+          //                           //   addWalletPageKey.currentState?.scrollTo(250);
+          //                           // });
+          //                         },
+          //                         unSelectedColor:
+          //                             appStateSettings["materialYou"]
+          //                                 ? null
+          //                                 : getColor(
+          //                                     context, "canvasContainer"),
+          //                       ),
+          //                     ],
+          //                   );
+          //                 },
+          //               );
+          //             },
+          //             text: "change-currency".tr(),
+          //           ),
+          //         );
+          //       }
+          //       return SizedBox.shrink();
+          //     },
+          //   ),
+          // ),
+          // SizedBox(height: 20),
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 500),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
+              child: TextFont(
+                text: "onboarding-info-2-1".tr(),
+                textAlign: TextAlign.center,
+                fontSize: 16,
+                maxLines: 5,
+                textColor: getColor(context, "black").withOpacity(0.5),
+              ),
             ),
           ),
         ],
       ),
       OnBoardPage(
+        pageIndex: 2,
+        controller: controller,
         widgets: [
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.sizeOf(context).height <=
-                        MediaQuery.sizeOf(context).width
-                    ? MediaQuery.sizeOf(context).height * 0.5
-                    : 300),
-            child: imageLanding3,
-          ),
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
-            child: TextFont(
-              text: "onboarding-title-3".tr(namedArgs: {"app": globalAppName}),
-              fontWeight: FontWeight.bold,
-              textAlign: TextAlign.center,
-              fontSize: 25,
-              maxLines: 5,
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 100),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Container(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.sizeOf(context).height <=
+                          MediaQuery.sizeOf(context).width
+                      ? MediaQuery.sizeOf(context).height * 0.5
+                      : 300),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  // BoxShadow(
+                  //   color: Theme.of(context)
+                  //       .colorScheme
+                  //       .secondary
+                  //       .withOpacity(0.15),
+                  //   blurRadius: 30,
+                  //   offset: Offset(0, 10),
+                  //   spreadRadius: 0,
+                  // ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: imageLanding3,
+              ),
             ),
           ),
-          SizedBox(height: 25),
+          SizedBox(height: 30),
+          SlideFadeTransition(
+            delayStart: Duration(milliseconds: 200),
+            animationDuration: Duration(milliseconds: 700),
+            curve: Curves.easeOutCubic,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(horizontal: 25),
+              child: TextFont(
+                text:
+                    "onboarding-title-3".tr(namedArgs: {"app": globalAppName}),
+                fontWeight: FontWeight.bold,
+                textAlign: TextAlign.center,
+                fontSize: 28,
+                maxLines: 5,
+                letterSpacing: -0.5,
+              ),
+            ),
+          ),
+          SizedBox(height: 30),
           getPlatform() == PlatformOS.isIOS
-              ? IntrinsicWidth(
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.symmetric(horizontal: 8.0),
-                    child: Button(
-                      label: "lets-go".tr(),
-                      onTap: () {
-                        nextNavigation();
-                      },
-                      expandedLayout: false,
+              ? SlideFadeTransition(
+                  delayStart: Duration(milliseconds: 300),
+                  animationDuration: Duration(milliseconds: 700),
+                  curve: Curves.easeOutCubic,
+                  child: IntrinsicWidth(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.symmetric(
+                          horizontal: 8.0),
+                      child: Button(
+                        label: "lets-go".tr(),
+                        onTap: () {
+                          nextNavigation();
+                        },
+                        expandedLayout: false,
+                      ),
                     ),
                   ),
                 )
               : SizedBox.shrink(),
           getPlatform() == PlatformOS.isIOS
               ? SizedBox.shrink()
-              : SettingsContainerOutlined(
-                  onTap: () async {
-                    loadingIndeterminateKey.currentState?.setVisibility(true);
-                    openLoadingPopupTryCatch(
-                      () async {
-                        // Can maybe use this function, but on web first login does not sync...
-                        // Let's just use the functionality below this
-                        // await signInAndSync(context, next: () {});
+              : SlideFadeTransition(
+                  delayStart: Duration(milliseconds: 300),
+                  animationDuration: Duration(milliseconds: 700),
+                  curve: Curves.easeOutCubic,
+                  child: SettingsContainerOutlined(
+                    onTap: () async {
+                      loadingIndeterminateKey.currentState?.setVisibility(true);
+                      openLoadingPopupTryCatch(
+                        () async {
+                          // Can maybe use this function, but on web first login does not sync...
+                          // Let's just use the functionality below this
+                          // await signInAndSync(context, next: () {});
 
-                        await signInGoogle(
-                          context: context,
-                          waitForCompletion: false,
-                          next: () {},
-                        );
-                        if (appStateSettings["username"] == "" &&
-                            googleUser != null) {
-                          updateSettings(
-                              "username", googleUser?.displayName ?? "",
-                              pagesNeedingRefresh: [0],
-                              updateGlobalState: false);
-                        }
-                        // If user has sync backups, but no real backups it will show up here
-                        // For now disable restoring of a backup popup, the sync backups will be restored automatically using the function call below
-                        // var result;
-                        // List<drive.File>? files = (await getDriveFiles()).$2;
-                        // if ((files?.length ?? 0) > 0) {
-                        //   result = await openPopup(
-                        //     context,
-                        //     icon: appStateSettings["outlinedIcons"] ? Icons.cloud_sync_outlined : Icons.cloud_sync_rounded,
-                        //     title: "backup-found".tr(),
-                        //     description: "backup-found-description".tr(),
-                        //     onSubmit: () {
-                        //       popRoute(context, true);
-                        //     },
-                        //     onCancel: () {
-                        //       popRoute(context, false);
-                        //     },
-                        //     onSubmitLabel: "restore".tr(),
-                        //     onCancelLabel: "cancel".tr(),
-                        //   );
-                        // }
-                        // if (result == true) {
-                        //   chooseBackup(context, hideDownloadButton: true);
-                        // } else if (result == false && googleUser != null) {
-                        //   openLoadingPopup(context);
-                        //   // set this to true so cloud functions run
-                        //   entireAppLoaded = true;
-                        //   await runAllCloudFunctions(
-                        //     context,
-                        //     forceSignIn: true,
-                        //   );
-                        //   popRoute(context);
-                        //   nextNavigation();
-                        // }
-                        // else {
-                        //   nextNavigation();
-                        // }
+                          await signInGoogle(
+                            context: context,
+                            waitForCompletion: false,
+                            next: () {},
+                          );
+                          if (appStateSettings["username"] == "" &&
+                              googleUser != null) {
+                            updateSettings(
+                                "username", googleUser?.displayName ?? "",
+                                pagesNeedingRefresh: [0],
+                                updateGlobalState: false);
+                          }
+                          // If user has sync backups, but no real backups it will show up here
+                          // For now disable restoring of a backup popup, the sync backups will be restored automatically using the function call below
+                          // var result;
+                          // List<drive.File>? files = (await getDriveFiles()).$2;
+                          // if ((files?.length ?? 0) > 0) {
+                          //   result = await openPopup(
+                          //     context,
+                          //     icon: appStateSettings["outlinedIcons"] ? Icons.cloud_sync_outlined : Icons.cloud_sync_rounded,
+                          //     title: "backup-found".tr(),
+                          //     description: "backup-found-description".tr(),
+                          //     onSubmit: () {
+                          //       popRoute(context, true);
+                          //     },
+                          //     onCancel: () {
+                          //       popRoute(context, false);
+                          //     },
+                          //     onSubmitLabel: "restore".tr(),
+                          //     onCancelLabel: "cancel".tr(),
+                          //   );
+                          // }
+                          // if (result == true) {
+                          //   chooseBackup(context, hideDownloadButton: true);
+                          // } else if (result == false && googleUser != null) {
+                          //   openLoadingPopup(context);
+                          //   // set this to true so cloud functions run
+                          //   entireAppLoaded = true;
+                          //   await runAllCloudFunctions(
+                          //     context,
+                          //     forceSignIn: true,
+                          //   );
+                          //   popRoute(context);
+                          //   nextNavigation();
+                          // }
+                          // else {
+                          //   nextNavigation();
+                          // }
 
-                        // set this to true so cloud functions run
-                        entireAppLoaded = true;
-                        await runAllCloudFunctions(
-                          context,
-                          forceSignIn: true,
-                        );
+                          // set this to true so cloud functions run
+                          entireAppLoaded = true;
+                          await runAllCloudFunctions(
+                            context,
+                            forceSignIn: true,
+                          );
 
-                        nextNavigation();
-                        loadingIndeterminateKey.currentState
-                            ?.setVisibility(false);
-                      },
-                      onError: (e) {
-                        print("Error signing in: " + e.toString());
-                        loadingIndeterminateKey.currentState
-                            ?.setVisibility(false);
-                      },
-                    );
-                  },
-                  title: "sign-in-with-google".tr(),
-                  icon: MoreIcons.google,
-                  isExpanded: false,
-                ),
-          getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
-              : SizedBox(height: 8),
-          getPlatform() == PlatformOS.isIOS
-              ? SizedBox.shrink()
-              : Padding(
-                  padding:
-                      const EdgeInsetsDirectional.symmetric(horizontal: 25),
-                  child: TextFont(
-                    text: "onboarding-info-3".tr(),
-                    textAlign: TextAlign.center,
-                    fontSize: 16,
-                    maxLines: 5,
+                          nextNavigation();
+                          loadingIndeterminateKey.currentState
+                              ?.setVisibility(false);
+                        },
+                        onError: (e) {
+                          print("Error signing in: " + e.toString());
+                          loadingIndeterminateKey.currentState
+                              ?.setVisibility(false);
+                        },
+                      );
+                    },
+                    title: "sign-in-with-google".tr(),
+                    icon: MoreIcons.google,
+                    isExpanded: false,
                   ),
                 ),
           getPlatform() == PlatformOS.isIOS
               ? SizedBox.shrink()
-              : SizedBox(height: 35),
+              : SizedBox(height: 12),
           getPlatform() == PlatformOS.isIOS
               ? SizedBox.shrink()
-              : LowKeyButton(
-                  onTap: () {
-                    nextNavigation();
-                  },
-                  text: "continue-without-sign-in".tr(),
+              : SlideFadeTransition(
+                  delayStart: Duration(milliseconds: 400),
+                  animationDuration: Duration(milliseconds: 700),
+                  curve: Curves.easeOutCubic,
+                  child: Padding(
+                    padding:
+                        const EdgeInsetsDirectional.symmetric(horizontal: 25),
+                    child: TextFont(
+                      text: "onboarding-info-3".tr(),
+                      textAlign: TextAlign.center,
+                      fontSize: 17,
+                      maxLines: 5,
+                      textColor: getColor(context, "black").withOpacity(0.6),
+                    ),
+                  ),
+                ),
+          getPlatform() == PlatformOS.isIOS
+              ? SizedBox.shrink()
+              : SizedBox(height: 30),
+          getPlatform() == PlatformOS.isIOS
+              ? SizedBox.shrink()
+              : SlideFadeTransition(
+                  delayStart: Duration(milliseconds: 500),
+                  animationDuration: Duration(milliseconds: 700),
+                  curve: Curves.easeOutCubic,
+                  child: LowKeyButton(
+                    onTap: () {
+                      nextNavigation();
+                    },
+                    text: "continue-without-sign-in".tr(),
+                  ),
                 ),
           // IntrinsicWidth(
           //   child: Button(
@@ -583,19 +725,21 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
         ),
         PositionedDirectional(
           bottom: 0,
+          start: 0,
+          end: 0,
           child: IgnorePointer(
             child: Container(
-              height: 100,
-              width: 1000,
+              height: 120,
               foregroundDecoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Theme.of(context).colorScheme.background.withOpacity(0.0),
+                    Theme.of(context).colorScheme.background.withOpacity(0.7),
                     Theme.of(context).colorScheme.background,
                   ],
                   begin: AlignmentDirectional.topCenter,
                   end: AlignmentDirectional.bottomCenter,
-                  stops: [0.1, 1],
+                  stops: [0.0, 0.5, 1.0],
                 ),
               ),
             ),
@@ -620,6 +764,8 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                       builder: (BuildContext context, Widget? child) {
                         int currentIndex =
                             controller.page?.round().toInt() ?? 0;
+                        bool isDark =
+                            Theme.of(context).brightness == Brightness.dark;
                         return AnimatedOpacity(
                           opacity: currentIndex <= 0 ? 0 : 1,
                           duration: Duration(milliseconds: 200),
@@ -638,6 +784,11 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                             padding: getIsFullScreen(context) == false
                                 ? EdgeInsetsDirectional.all(3)
                                 : EdgeInsetsDirectional.all(6),
+                            iconColor: isDark ? Colors.white : Colors.grey[700],
+                            color: isDark
+                                ? Colors.white.withOpacity(0.1)
+                                : Colors.grey[200]?.withOpacity(0.5) ??
+                                    Colors.grey.withOpacity(0.5),
                           ),
                         );
                       },
@@ -649,6 +800,8 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                       builder: (BuildContext context, Widget? child) {
                         int currentIndex =
                             controller.page?.round().toInt() ?? 0;
+                        bool isDark =
+                            Theme.of(context).brightness == Brightness.dark;
                         return AnimatedOpacity(
                           opacity: getPlatform() == PlatformOS.isIOS
                               ? 1
@@ -669,6 +822,11 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
                             padding: getIsFullScreen(context) == false
                                 ? EdgeInsetsDirectional.all(3)
                                 : EdgeInsetsDirectional.all(6),
+                            iconColor: isDark ? Colors.white : Colors.grey[700],
+                            color: isDark
+                                ? Colors.white.withOpacity(0.1)
+                                : Colors.grey[200]?.withOpacity(0.5) ??
+                                    Colors.grey.withOpacity(0.5),
                           ),
                         );
                       },
@@ -684,45 +842,113 @@ class OnBoardingPageBodyState extends State<OnBoardingPageBody> {
   }
 }
 
-class OnBoardPage extends StatelessWidget {
-  const OnBoardPage({Key? key, required this.widgets, this.bottomWidget})
-      : super(key: key);
+class OnBoardPage extends StatefulWidget {
+  const OnBoardPage({
+    Key? key,
+    required this.widgets,
+    this.bottomWidget,
+    this.pageIndex = 0,
+    this.controller,
+  }) : super(key: key);
   final List<Widget> widgets;
   final Widget? bottomWidget;
+  final int pageIndex;
+  final PageController? controller;
+
+  @override
+  State<OnBoardPage> createState() => _OnBoardPageState();
+}
+
+class _OnBoardPageState extends State<OnBoardPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _pageAnimationController;
+  late Animation<double> _pageAnimation;
+  bool _hasAnimated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 800),
+    );
+    _pageAnimation = CurvedAnimation(
+      parent: _pageAnimationController,
+      curve: Curves.easeOutCubic,
+    );
+
+    if (widget.controller != null) {
+      widget.controller!.addListener(_onPageChanged);
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && !_hasAnimated) {
+        _pageAnimationController.forward();
+        _hasAnimated = true;
+      }
+    });
+  }
+
+  void _onPageChanged() {
+    if (widget.controller != null && mounted) {
+      final currentPage = widget.controller!.page?.round().toInt() ?? 0;
+      if (currentPage == widget.pageIndex && !_hasAnimated) {
+        _pageAnimationController.forward();
+        _hasAnimated = true;
+      } else if (currentPage != widget.pageIndex && _hasAnimated) {
+        _pageAnimationController.reset();
+        _hasAnimated = false;
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller != null) {
+      widget.controller!.removeListener(_onPageChanged);
+    }
+    _pageAnimationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Center(
-          child: LinearGradientFadedEdges(
-            gradientSize: 20,
-            enableTop: getPlatform() == PlatformOS.isIOS,
-            enableBottom: getPlatform() == PlatformOS.isIOS,
-            enableStart: false,
-            enableEnd: false,
-            child: ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Column(
-                  children: [
-                    SizedBox(height: 20),
-                    ...widgets,
-                    SizedBox(height: 80),
-                  ],
-                ),
-              ],
+    return FadeTransition(
+      opacity: _pageAnimation,
+      child: Stack(
+        children: [
+          Center(
+            child: LinearGradientFadedEdges(
+              gradientSize: 20,
+              enableTop: getPlatform() == PlatformOS.isIOS,
+              enableBottom: getPlatform() == PlatformOS.isIOS,
+              enableStart: false,
+              enableEnd: false,
+              child: ListView(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                children: <Widget>[
+                  Column(
+                    children: [
+                      SizedBox(height: 20),
+                      ...widget.widgets,
+                      SizedBox(height: 80),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: EdgeInsetsDirectional.only(
-              bottom: 60 + MediaQuery.paddingOf(context).bottom),
-          child: Align(
-            alignment: AlignmentDirectional.bottomCenter,
-            child: bottomWidget ?? SizedBox.shrink(),
+          Padding(
+            padding: EdgeInsetsDirectional.only(
+                bottom: 60 + MediaQuery.paddingOf(context).bottom),
+            child: Align(
+              alignment: AlignmentDirectional.bottomCenter,
+              child: widget.bottomWidget ?? SizedBox.shrink(),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

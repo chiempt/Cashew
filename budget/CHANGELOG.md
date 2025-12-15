@@ -10,6 +10,10 @@
   - Updates Dart files, JSON files, and iOS configuration files
   - Handles legacy directory structures automatically
   - Usage: `./change_package_name.sh <new_package_name>` or `./change_package_name.sh <old_package> <new_package>`
+- **Android installation fix scripts**: Created scripts to handle `INSTALL_FAILED_USER_RESTRICTED` errors:
+  - `fix_android_install.sh`: Comprehensive script that uninstalls existing app, tries multiple installation methods with different ADB flags (-r, -d, -g), and provides manual instructions if automatic fix fails
+  - `flutter_install.sh`: Wrapper for `flutter install` that automatically detects and handles USER_RESTRICTED errors, attempts workarounds, and provides clear error messages
+  - Both scripts check device connectivity, handle APK building if needed, and provide step-by-step manual instructions when automatic fixes fail
 
 ### Android Build Fixes
 - **Gradle & Kotlin Upgrade**: Fixed "Unresolved reference: filePermissions" and "BaseVariant" errors (Flutter 3.38.4 user branch requires Kotlin 2.0+):
@@ -45,6 +49,28 @@
   - Added subtle shadow to selected icon indicators
   - Increased padding for better touch targets
   - Applied consistent styling across iOS and Android platforms
+- **Professional Onboarding Experience**:
+  - Replaced elastic page transitions with smooth cubic easing (600ms duration) for more polished feel
+  - Added staggered slide-fade animations for all content elements with progressive delays (100-500ms)
+  - Enhanced image presentation with rounded corners (20px), subtle shadows, and proper clipping
+  - Improved typography hierarchy with larger titles (28px), better letter spacing (-0.5), and refined text colors
+  - Better spacing between elements (increased from 15px to 20-30px for better breathing room)
+  - Enhanced gradient overlay at bottom with smoother 3-stop gradient for better visual fade
+  - Added per-page fade animations that trigger when each page becomes active
+  - Improved visual consistency across all three onboarding pages with unified animation timing
+  - **Professional Page Indicator**: Redesigned page indicator dots with modern pill-shaped active state:
+    - Active dot expands to 24px width (3x wider) instead of just scaling up
+    - Smooth 300ms cubic easing transitions between states
+    - Better color opacity and visual hierarchy (active: 100% opacity, inactive: 25-40% opacity)
+    - Rounded corners (4px radius) for modern appearance
+    - Smooth interpolation during page transitions for fluid user experience
+  - **Professional Navigation Buttons**: Enhanced next/previous buttons with modern design:
+    - Larger button size (56px) with rounded corners (16px radius) for better touch targets
+    - Dual-layer shadow system (primary shadow 12px blur, secondary shadow 4px blur) for depth
+    - Smooth scale animation (0.92x) on tap with 150ms duration for tactile feedback
+    - Animated opacity and scale transitions (300ms) when buttons appear/disappear
+    - Material You support with adaptive opacity for secondary container
+    - Professional visual hierarchy with proper icon sizing (28px) and spacing
 
 ### Architecture Decisions
 - **Bottom Navigation Bar Refactoring**: Replaced ScaleIn widget with AnimatedContainer and AnimatedScale for better control and smoother animations. This provides more granular control over animation timing and visual effects.

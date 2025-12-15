@@ -14,41 +14,50 @@ class PageIndicator extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext context, Widget? child) {
-        int currentPage =
-            controller.page?.round().toInt() ?? controller.initialPage;
+        double? page = controller.page;
+        int currentPage = page?.round().toInt() ?? controller.initialPage;
+        double pageOffset = page ?? currentPage.toDouble();
+
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: List.generate(
             itemCount,
             (index) {
-              return Builder(
-                builder: (BuildContext context) {
-                  double scaleFactor = (index == currentPage) ? 1.3 : 1.0;
-                  Color color = (index == currentPage)
-                      ? Theme.of(context).colorScheme.secondary.withOpacity(0.7)
-                      : Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(0.2);
-                  return AnimatedScale(
-                    duration: Duration(milliseconds: 900),
-                    scale: scaleFactor,
-                    curve: ElasticOutCurve(0.2),
-                    child: AnimatedSwitcher(
-                      duration: Duration(milliseconds: 400),
-                      child: Container(
-                        key: ValueKey(index == currentPage),
-                        width: 6,
-                        height: 6,
-                        margin: EdgeInsetsDirectional.symmetric(horizontal: 3),
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadiusDirectional.circular(10),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              double distance = (pageOffset - index).abs();
+              double activeFactor = 1.0 - (distance.clamp(0.0, 1.0));
+
+              double baseWidth = 8.0;
+              double activeWidth = 24.0;
+              double width =
+                  baseWidth + (activeWidth - baseWidth) * activeFactor;
+              double height = 8.0;
+
+              bool isDark = Theme.of(context).brightness == Brightness.dark;
+              Color activeColor =
+                  isDark ? Colors.white : Colors.grey[700] ?? Colors.grey;
+              Color inactiveColor = isDark
+                  ? Colors.white.withOpacity(0.25)
+                  : Colors.grey[400]?.withOpacity(0.4) ??
+                      Colors.grey.withOpacity(0.4);
+
+              double opacity = 0.4 + (activeFactor * 0.6);
+
+              Color color = Color.lerp(
+                    inactiveColor,
+                    activeColor,
+                    activeFactor,
+                  ) ??
+                  inactiveColor;
+
+              return Container(
+                width: width,
+                height: height,
+                margin: EdgeInsetsDirectional.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(opacity),
+                  borderRadius: BorderRadiusDirectional.circular(4),
+                ),
               );
             },
           ),
