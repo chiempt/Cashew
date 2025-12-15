@@ -1,6 +1,6 @@
 {
-    "name": "Cashew",
-    "short_name": "Cashew",
+    "name": "Money Manager & Budget Tracker",
+    "short_name": "Money Manager & Budget Tracker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",

@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Development Tools
+- **Package name change script**: Created `change_package_name.sh` script to automatically change Android package name throughout the entire project. The script:
+  - Auto-detects current package name from `android/app/build.gradle` if only new package name is provided
+  - Updates all AndroidManifest.xml files, build.gradle files, Kotlin source files
+  - Moves Kotlin source directories to match new package structure
+  - Updates Dart files, JSON files, and iOS configuration files
+  - Handles legacy directory structures automatically
+  - Usage: `./change_package_name.sh <new_package_name>` or `./change_package_name.sh <old_package> <new_package>`
+
 ### Android Build Fixes
 - **Gradle & Kotlin Upgrade**: Fixed "Unresolved reference: filePermissions" and "BaseVariant" errors (Flutter 3.38.4 user branch requires Kotlin 2.0+):
   - Kotlin: 1.9.0 → 2.0.21 (required for Flutter 3.38.4's new Kotlin API, latest 2.0.x)
@@ -22,6 +31,9 @@
 - **Removed deprecated jcenter() repository**: Removed `jcenter()` from `settings.gradle` dependencyResolutionManagement repositories. JCenter was shut down in 2021 and causes build failures when Gradle tries to resolve dependencies from it. Flutter engine artifacts are now resolved from Google Maven, Maven Central, and local Maven repositories only.
 - **Installed Android SDK cmdline-tools**: Installed latest Android SDK command-line tools to `/Users/chiempham/Library/Android/sdk/cmdline-tools/latest/` to fix "Android sdkmanager not found" error when running `flutter doctor --android-licenses`. All Android SDK package licenses have been accepted.
 - **Fixed notification_listener_service namespace issue**: Created `fix_notification_listener_namespace.sh` script to automatically add missing `namespace` declaration to `notification_listener_service` plugin's build.gradle file. This is required for AGP 8.x compatibility. The script is automatically executed by `pub_get.sh` wrapper after each `flutter pub get` to ensure the fix persists across dependency updates.
+
+### Bug Fixes
+- **Fixed "Looking up a deactivated widget's ancestor is unsafe" error**: Fixed runtime error in `openPopup`, `openPopupCustom`, and `openLoadingPopup` functions where `Theme.of(context)` and `MediaQuery.paddingOf(context)` were being called with context from `pageBuilder` callback parameter, which may be deactivated. Wrapped dialog content in `Builder` widget to ensure valid Theme context is available when accessing Theme and MediaQuery.
 
 ### UI/UX Improvements
 - **Enhanced Bottom Navigation Bar Design**: 

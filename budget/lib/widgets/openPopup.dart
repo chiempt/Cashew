@@ -61,239 +61,270 @@ Future<T?> openPopup<T extends Object?>(
       );
     },
     transitionDuration: Duration(milliseconds: 200),
-    pageBuilder: (_, __, ___) {
+    pageBuilder: (pageContext, __, ___) {
       double borderRadius = getPlatform() == PlatformOS.isIOS ? 10 : 25;
-      Color tertiaryButtonColor = appStateSettings["materialYou"] == false &&
-              Theme.of(context).brightness == Brightness.light
-          ? dynamicPastel(context, Theme.of(context).colorScheme.tertiary,
-              amount: 0.3)
-          : appStateSettings["materialYou"]
-              ? dynamicPastel(context, Theme.of(context).colorScheme.tertiary,
-                  amount: 0.15)
-              : dynamicPastel(
-                  context, Theme.of(context).colorScheme.tertiaryContainer,
-                  amount: 0.15);
-      Color onTertiaryButtonColor = appStateSettings["materialYou"] ||
-              Theme.of(context).brightness == Brightness.light
-          ? dynamicPastel(context, Theme.of(context).colorScheme.onTertiary,
-              amount: 0.25)
-          : Theme.of(context).colorScheme.onTertiaryContainer;
-      Color primaryButtonColor = appStateSettings["materialYou"] == false &&
-              Theme.of(context).brightness == Brightness.light
-          ? dynamicPastel(context, Theme.of(context).colorScheme.primary,
-              amount: 0.3)
-          : appStateSettings["materialYou"]
-              ? dynamicPastel(context, Theme.of(context).colorScheme.primary,
-                  amount: 0.15)
-              : Theme.of(context).colorScheme.secondaryContainer;
-      Color onPrimaryButtonColor = appStateSettings["materialYou"] ||
-              Theme.of(context).brightness == Brightness.light
-          ? dynamicPastel(
-              context,
-              Theme.of(context).colorScheme.onPrimary,
-              amount: 0.25,
-            )
-          : Theme.of(context).colorScheme.onSecondaryContainer;
       return WillPopScope(
         //Stop back button
         onWillPop: () async => barrierDismissible,
-        child: Center(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: getWidthBottomSheet(context)),
-            child: Container(
-              margin: EdgeInsets.only(
-                left: MediaQuery.paddingOf(context).left + 20,
-                right: MediaQuery.paddingOf(context).right + 20,
-                top: MediaQuery.paddingOf(context).top + 20,
-                bottom: MediaQuery.paddingOf(context).bottom + 20,
-              ),
-              decoration: BoxDecoration(
-                color: appStateSettings["materialYou"]
-                    ? dynamicPastel(context,
-                        Theme.of(context).colorScheme.secondaryContainer,
-                        amount: 0.5)
-                    : getColor(context, "lightDarkAccent"),
-                borderRadius: BorderRadiusDirectional.circular(borderRadius),
-                boxShadow: boxShadowGeneral(context),
-              ),
-              child: SingleChildScrollView(
-                child: Builder(builder: (context) {
-                  Widget content = Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.symmetric(horizontal: 25),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 17),
-                            if (icon != null)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    vertical: 8.0, horizontal: 10),
-                                child: Transform.scale(
-                                  scale: iconScale ?? 1,
-                                  child: Icon(
-                                    icon,
-                                    size: 65,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+        child: Builder(builder: (dialogContext) {
+          return Center(
+            child: ConstrainedBox(
+              constraints:
+                  BoxConstraints(maxWidth: getWidthBottomSheet(dialogContext)),
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: MediaQuery.paddingOf(dialogContext).left + 20,
+                  right: MediaQuery.paddingOf(dialogContext).right + 20,
+                  top: MediaQuery.paddingOf(dialogContext).top + 20,
+                  bottom: MediaQuery.paddingOf(dialogContext).bottom + 20,
+                ),
+                decoration: BoxDecoration(
+                  color: appStateSettings["materialYou"]
+                      ? dynamicPastel(
+                          dialogContext,
+                          Theme.of(dialogContext)
+                              .colorScheme
+                              .secondaryContainer,
+                          amount: 0.5)
+                      : getColor(dialogContext, "lightDarkAccent"),
+                  borderRadius: BorderRadiusDirectional.circular(borderRadius),
+                  boxShadow: boxShadowGeneral(dialogContext),
+                ),
+                child: SingleChildScrollView(
+                  child: Builder(builder: (context) {
+                    // Calculate colors inside Builder where Theme is available
+                    Color tertiaryButtonColor =
+                        appStateSettings["materialYou"] == false &&
+                                Theme.of(context).brightness == Brightness.light
+                            ? dynamicPastel(
+                                context, Theme.of(context).colorScheme.tertiary,
+                                amount: 0.3)
+                            : appStateSettings["materialYou"]
+                                ? dynamicPastel(context,
+                                    Theme.of(context).colorScheme.tertiary,
+                                    amount: 0.15)
+                                : dynamicPastel(
+                                    context,
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .tertiaryContainer,
+                                    amount: 0.15);
+                    Color onTertiaryButtonColor =
+                        appStateSettings["materialYou"] ||
+                                Theme.of(context).brightness == Brightness.light
+                            ? dynamicPastel(context,
+                                Theme.of(context).colorScheme.onTertiary,
+                                amount: 0.25)
+                            : Theme.of(context).colorScheme.onTertiaryContainer;
+                    Color primaryButtonColor =
+                        appStateSettings["materialYou"] == false &&
+                                Theme.of(context).brightness == Brightness.light
+                            ? dynamicPastel(
+                                context, Theme.of(context).colorScheme.primary,
+                                amount: 0.3)
+                            : appStateSettings["materialYou"]
+                                ? dynamicPastel(context,
+                                    Theme.of(context).colorScheme.primary,
+                                    amount: 0.15)
+                                : Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer;
+                    Color onPrimaryButtonColor =
+                        appStateSettings["materialYou"] ||
+                                Theme.of(context).brightness == Brightness.light
+                            ? dynamicPastel(
+                                context,
+                                Theme.of(context).colorScheme.onPrimary,
+                                amount: 0.25,
+                              )
+                            : Theme.of(context)
+                                .colorScheme
+                                .onSecondaryContainer;
+                    Widget content = Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.symmetric(horizontal: 25),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 17),
+                              if (icon != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          vertical: 8.0, horizontal: 10),
+                                  child: Transform.scale(
+                                    scale: iconScale ?? 1,
+                                    child: Icon(
+                                      icon,
+                                      size: 65,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            if (title != null)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    vertical: 8.0, horizontal: 10),
-                                child: TextFont(
-                                  textAlign: TextAlign.center,
-                                  text: title,
-                                  fontSize: 23,
-                                  fontWeight: FontWeight.bold,
-                                  maxLines: 5,
-                                  textColor: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer,
+                              if (title != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          vertical: 8.0, horizontal: 10),
+                                  child: TextFont(
+                                    textAlign: TextAlign.center,
+                                    text: title,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold,
+                                    maxLines: 5,
+                                    textColor: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
+                                  ),
                                 ),
-                              ),
-                            if (subtitle != null)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    vertical: 8.0, horizontal: 10),
-                                child: TextFont(
-                                  textAlign: TextAlign.center,
-                                  text: subtitle,
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold,
-                                  maxLines: 5,
-                                  textColor: Theme.of(context)
-                                      .colorScheme
-                                      .onTertiaryContainer,
+                              if (subtitle != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          vertical: 8.0, horizontal: 10),
+                                  child: TextFont(
+                                    textAlign: TextAlign.center,
+                                    text: subtitle,
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.bold,
+                                    maxLines: 5,
+                                    textColor: Theme.of(context)
+                                        .colorScheme
+                                        .onTertiaryContainer,
+                                  ),
                                 ),
-                              ),
-                            if (beforeDescriptionWidget != null)
-                              beforeDescriptionWidget,
-                            if (description != null)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    vertical: 8.0, horizontal: 10),
-                                child: TextFont(
-                                  textAlign: TextAlign.center,
-                                  text: description,
-                                  fontSize: 16.5,
-                                  maxLines: 100,
+                              if (beforeDescriptionWidget != null)
+                                beforeDescriptionWidget,
+                              if (description != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          vertical: 8.0, horizontal: 10),
+                                  child: TextFont(
+                                    textAlign: TextAlign.center,
+                                    text: description,
+                                    fontSize: 16.5,
+                                    maxLines: 100,
+                                  ),
                                 ),
-                              ),
-                            if (descriptionWidget != null) descriptionWidget,
-                            if (onSubmitLabel != null || onCancelLabel != null)
-                              Padding(
-                                padding: const EdgeInsetsDirectional.symmetric(
-                                    vertical: 16.0),
-                                child: Wrap(
-                                  alignment: WrapAlignment.center,
-                                  runSpacing: 10,
-                                  children: [
-                                    onCancelLabel != null
-                                        ? IntrinsicWidth(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .symmetric(
-                                                      horizontal: 8.0),
-                                              child: Builder(
-                                                  builder: (boxContext) {
-                                                return Button(
-                                                  color: tertiaryButtonColor,
+                              if (descriptionWidget != null) descriptionWidget,
+                              if (onSubmitLabel != null ||
+                                  onCancelLabel != null)
+                                Padding(
+                                  padding:
+                                      const EdgeInsetsDirectional.symmetric(
+                                          vertical: 16.0),
+                                  child: Wrap(
+                                    alignment: WrapAlignment.center,
+                                    runSpacing: 10,
+                                    children: [
+                                      onCancelLabel != null
+                                          ? IntrinsicWidth(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .symmetric(
+                                                        horizontal: 8.0),
+                                                child: Builder(
+                                                    builder: (boxContext) {
+                                                  return Button(
+                                                    color: tertiaryButtonColor,
+                                                    textColor:
+                                                        onTertiaryButtonColor,
+                                                    label: onCancelLabel,
+                                                    onTap: () {
+                                                      if (onCancel != null) {
+                                                        onCancel();
+                                                      }
+                                                      if (onCancelWithBoxContext !=
+                                                          null) {
+                                                        onCancelWithBoxContext(
+                                                            boxContext);
+                                                      }
+                                                    },
+                                                  );
+                                                }),
+                                              ),
+                                            )
+                                          : SizedBox.shrink(),
+                                      onExtraLabel != null
+                                          ? IntrinsicWidth(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .symmetric(
+                                                        horizontal: 8.0),
+                                                child: Button(
+                                                  expandedLayout: true,
+                                                  color: primaryButtonColor,
                                                   textColor:
-                                                      onTertiaryButtonColor,
-                                                  label: onCancelLabel,
-                                                  onTap: () {
-                                                    if (onCancel != null) {
-                                                      onCancel();
-                                                    }
-                                                    if (onCancelWithBoxContext !=
-                                                        null) {
-                                                      onCancelWithBoxContext(
-                                                          boxContext);
-                                                    }
-                                                  },
-                                                );
-                                              }),
-                                            ),
-                                          )
-                                        : SizedBox.shrink(),
-                                    onExtraLabel != null
-                                        ? IntrinsicWidth(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .symmetric(
-                                                      horizontal: 8.0),
-                                              child: Button(
-                                                expandedLayout: true,
-                                                color: primaryButtonColor,
-                                                textColor: onPrimaryButtonColor,
-                                                label: onExtraLabel,
-                                                onTap: onExtra ?? () {},
+                                                      onPrimaryButtonColor,
+                                                  label: onExtraLabel,
+                                                  onTap: onExtra ?? () {},
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        : SizedBox.shrink(),
-                                    onSubmitLabel != null
-                                        ? IntrinsicWidth(
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .symmetric(
-                                                      horizontal: 8.0),
-                                              child: Button(
-                                                color: primaryButtonColor,
-                                                textColor: onPrimaryButtonColor,
-                                                label: onSubmitLabel,
-                                                onTap: onSubmit ?? () {},
+                                            )
+                                          : SizedBox.shrink(),
+                                      onSubmitLabel != null
+                                          ? IntrinsicWidth(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .symmetric(
+                                                        horizontal: 8.0),
+                                                child: Button(
+                                                  color: primaryButtonColor,
+                                                  textColor:
+                                                      onPrimaryButtonColor,
+                                                  label: onSubmitLabel,
+                                                  onTap: onSubmit ?? () {},
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        : SizedBox.shrink(),
-                                  ],
+                                            )
+                                          : SizedBox.shrink(),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            onExtraLabel2 == null
-                                ? SizedBox(height: 17)
-                                : SizedBox(height: 5),
-                          ],
-                        ),
-                      ),
-                      if (onExtraLabel2 != null)
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                            start: 10,
-                            end: 10,
-                            bottom: 12,
-                          ),
-                          child: Button(
-                            borderRadius: borderRadius,
-                            expandedLayout: true,
-                            color: tertiaryButtonColor,
-                            textColor: onTertiaryButtonColor,
-                            label: onExtraLabel2,
-                            onTap: onExtra2 ?? () {},
+                              onExtraLabel2 == null
+                                  ? SizedBox(height: 17)
+                                  : SizedBox(height: 5),
+                            ],
                           ),
                         ),
-                      // SizedBox(height: 16),
-                    ],
-                  );
-                  // Only use intrinsic width if the content is controlled
-                  if (onExtraLabel2 != null &&
-                      descriptionWidget == null &&
-                      beforeDescriptionWidget == null)
-                    return IntrinsicWidth(child: content);
-                  return content;
-                }),
+                        if (onExtraLabel2 != null)
+                          Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                              start: 10,
+                              end: 10,
+                              bottom: 12,
+                            ),
+                            child: Button(
+                              borderRadius: borderRadius,
+                              expandedLayout: true,
+                              color: tertiaryButtonColor,
+                              textColor: onTertiaryButtonColor,
+                              label: onExtraLabel2,
+                              onTap: onExtra2 ?? () {},
+                            ),
+                          ),
+                        // SizedBox(height: 16),
+                      ],
+                    );
+                    // Only use intrinsic width if the content is controlled
+                    if (onExtraLabel2 != null &&
+                        descriptionWidget == null &&
+                        beforeDescriptionWidget == null)
+                      return IntrinsicWidth(child: content);
+                    return content;
+                  }),
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       );
     },
   );
@@ -376,53 +407,56 @@ Future<T?> openPopupCustom<T extends Object?>(
       );
     },
     transitionDuration: Duration(milliseconds: 200),
-    pageBuilder: (_, __, ___) {
+    pageBuilder: (pageContext, __, ___) {
       return WillPopScope(
         //Stop back button
         onWillPop: () async => barrierDismissible,
-        child: Center(
-          child: Container(
-            margin: EdgeInsetsDirectional.only(
-              start: 20,
-              end: 20,
-              top: MediaQuery.paddingOf(context).top,
-              bottom: MediaQuery.paddingOf(context).bottom,
-            ),
-            decoration: BoxDecoration(
-              color: appStateSettings["materialYou"]
-                  ? dynamicPastel(
-                      context, Theme.of(context).colorScheme.secondaryContainer,
-                      amount: 0.5)
-                  : getColor(context, "lightDarkAccent"),
-              borderRadius: borderRadius ??
-                  BorderRadiusDirectional.circular(
-                      getPlatform() == PlatformOS.isIOS ? 10 : 25),
-              boxShadow: boxShadowGeneral(context),
-            ),
-            child: SingleChildScrollView(
-              padding: padding,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  title == null
-                      ? SizedBox.shrink()
-                      : Padding(
-                          padding: const EdgeInsetsDirectional.only(bottom: 15),
-                          child: TextFont(
-                            text: title,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            maxLines: 5,
-                            textAlign: TextAlign.center,
+        child: Builder(builder: (dialogContext) {
+          return Center(
+            child: Container(
+              margin: EdgeInsetsDirectional.only(
+                start: 20,
+                end: 20,
+                top: MediaQuery.paddingOf(dialogContext).top,
+                bottom: MediaQuery.paddingOf(dialogContext).bottom,
+              ),
+              decoration: BoxDecoration(
+                color: appStateSettings["materialYou"]
+                    ? dynamicPastel(dialogContext,
+                        Theme.of(dialogContext).colorScheme.secondaryContainer,
+                        amount: 0.5)
+                    : getColor(dialogContext, "lightDarkAccent"),
+                borderRadius: borderRadius ??
+                    BorderRadiusDirectional.circular(
+                        getPlatform() == PlatformOS.isIOS ? 10 : 25),
+                boxShadow: boxShadowGeneral(dialogContext),
+              ),
+              child: SingleChildScrollView(
+                padding: padding,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    title == null
+                        ? SizedBox.shrink()
+                        : Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(bottom: 15),
+                            child: TextFont(
+                              text: title,
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              maxLines: 5,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                  child,
-                ],
+                    child,
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        }),
       );
     },
   );
@@ -452,32 +486,34 @@ Future<T?> openLoadingPopup<T extends Object?>(BuildContext context) {
       );
     },
     transitionDuration: Duration(milliseconds: 200),
-    pageBuilder: (_, __, ___) {
+    pageBuilder: (pageContext, __, ___) {
       return WillPopScope(
         //Stop back button
         onWillPop: () async => false,
-        child: Center(
-          child: Container(
-            padding:
-                EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 20),
-            margin: EdgeInsetsDirectional.only(
-              start: 20,
-              end: 20,
-              top: MediaQuery.paddingOf(context).top,
-              bottom: MediaQuery.paddingOf(context).bottom,
+        child: Builder(builder: (dialogContext) {
+          return Center(
+            child: Container(
+              padding:
+                  EdgeInsetsDirectional.symmetric(horizontal: 20, vertical: 20),
+              margin: EdgeInsetsDirectional.only(
+                start: 20,
+                end: 20,
+                top: MediaQuery.paddingOf(dialogContext).top,
+                bottom: MediaQuery.paddingOf(dialogContext).bottom,
+              ),
+              decoration: BoxDecoration(
+                color: appStateSettings["materialYou"]
+                    ? dynamicPastel(dialogContext,
+                        Theme.of(dialogContext).colorScheme.secondaryContainer,
+                        amount: 0.5)
+                    : getColor(dialogContext, "lightDarkAccent"),
+                borderRadius: BorderRadiusDirectional.circular(
+                    getPlatform() == PlatformOS.isIOS ? 10 : 25),
+              ),
+              child: CircularProgressIndicator(),
             ),
-            decoration: BoxDecoration(
-              color: appStateSettings["materialYou"]
-                  ? dynamicPastel(
-                      context, Theme.of(context).colorScheme.secondaryContainer,
-                      amount: 0.5)
-                  : getColor(context, "lightDarkAccent"),
-              borderRadius: BorderRadiusDirectional.circular(
-                  getPlatform() == PlatformOS.isIOS ? 10 : 25),
-            ),
-            child: CircularProgressIndicator(),
-          ),
-        ),
+          );
+        }),
       );
     },
   );
